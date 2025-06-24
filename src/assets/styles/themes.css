@@ -1,0 +1,247 @@
+/* Snake Math Vue - Theme System */
+
+/* Base theme variables - Light Theme (Green Spectrum) */
+:root {
+  /* Brand Colors - Green Spectrum */
+  --primary-color: #059669;      /* Emerald 600 */
+  --primary-hover: #047857;      /* Emerald 700 */
+  --primary-light: #d1fae5;      /* Emerald 100 */
+  --primary-dark: #064e3b;       /* Emerald 900 */
+  
+  --secondary-color: #0d9488;    /* Teal 600 */
+  --secondary-hover: #0f766e;    /* Teal 700 */
+  --secondary-light: #ccfbf1;    /* Teal 100 */
+  
+  --accent-color: #16a34a;       /* Green 600 */
+  --accent-hover: #15803d;       /* Green 700 */
+  --accent-light: #dcfce7;       /* Green 100 */
+  
+  /* Neutral Colors - Light Gray Base */
+  --bg-primary: #f8fafc;         /* Slate 50 */
+  --bg-secondary: #ffffff;       /* Pure white for cards */
+  --bg-tertiary: #f1f5f9;        /* Slate 100 */
+  --bg-elevated: #ffffff;        /* Elevated surfaces */
+  --bg-interactive: #f0fdf4;     /* Green 50 for interactive elements */
+  
+  --text-primary: #0f172a;       /* Slate 900 */
+  --text-secondary: #475569;     /* Slate 600 */
+  --text-tertiary: #64748b;      /* Slate 500 */
+  --text-muted: #94a3b8;         /* Slate 400 */
+  --text-inverse: #ffffff;       /* White text for dark backgrounds */
+  
+  --border-primary: #e2e8f0;     /* Slate 200 */
+  --border-secondary: #cbd5e1;   /* Slate 300 */
+  --border-focus: #059669;       /* Primary green for focus states */
+  --border-interactive: #16a34a; /* Accent green for interactive borders */
+  
+  /* Status Colors */
+  --success-color: #16a34a;      /* Green 600 */
+  --success-bg: #dcfce7;         /* Green 100 */
+  --warning-color: #ca8a04;      /* Yellow 600 */
+  --warning-bg: #fef3c7;         /* Yellow 100 */
+  --error-color: #dc2626;        /* Red 600 */
+  --error-bg: #fee2e2;           /* Red 100 */
+  --info-color: #0284c7;         /* Sky 600 */
+  --info-bg: #e0f2fe;            /* Sky 100 */
+  
+  /* Shadows - Subtle greens */
+  --shadow-sm: 0 1px 2px rgba(5, 150, 105, 0.05);
+  --shadow-md: 0 4px 6px rgba(5, 150, 105, 0.07);
+  --shadow-lg: 0 10px 15px rgba(5, 150, 105, 0.1);
+  --shadow-xl: 0 20px 25px rgba(5, 150, 105, 0.15);
+  
+  /* Mathematical notation colors */
+  --math-primary: #059669;       /* Primary green for math expressions */
+  --math-secondary: #0d9488;     /* Teal for secondary math elements */
+  --math-highlight: #16a34a;     /* Accent green for highlighting */
+  --math-bg: #f0fdf4;            /* Light green background for math blocks */
+  
+  /* Interactive element colors */
+  --slider-track: #e2e8f0;       /* Light gray track */
+  --slider-thumb: #059669;       /* Primary green thumb */
+  --slider-hover: #047857;       /* Darker green on hover */
+  
+  /* Code syntax highlighting - Green spectrum */
+  --code-bg: #f8fafc;            /* Light background */
+  --code-border: #e2e8f0;        /* Subtle border */
+  --code-keyword: #059669;       /* Keywords in primary green */
+  --code-string: #16a34a;        /* Strings in accent green */
+  --code-number: #0d9488;        /* Numbers in secondary teal */
+  --code-comment: #64748b;       /* Comments in muted gray */
+}
+
+/* Dark Theme (Purple Spectrum) */
+[data-theme="dark"] {
+  /* Brand Colors - Purple Spectrum */
+  --primary-color: #8b5cf6;      /* Violet 500 */
+  --primary-hover: #7c3aed;      /* Violet 600 */
+  --primary-light: #1e1b4b;      /* Indigo 900 (dark context) */
+  --primary-dark: #3730a3;       /* Indigo 700 */
+  
+  --secondary-color: #a855f7;    /* Purple 500 */
+  --secondary-hover: #9333ea;    /* Purple 600 */
+  --secondary-light: #1e1b4b;    /* Dark purple background */
+  
+  --accent-color: #c084fc;       /* Purple 400 */
+  --accent-hover: #a855f7;       /* Purple 500 */
+  --accent-light: #2d1b69;       /* Dark purple for accents */
+  
+  /* Neutral Colors - Dark Base */
+  --bg-primary: #0f0f23;         /* Very dark blue-purple */
+  --bg-secondary: #1a1a2e;       /* Dark purple-gray */
+  --bg-tertiary: #16213e;        /* Slightly lighter dark */
+  --bg-elevated: #252545;        /* Elevated dark surfaces */
+  --bg-interactive: #1e1b4b;     /* Dark purple for interactive elements */
+  
+  --text-primary: #f1f5f9;       /* Light gray for primary text */
+  --text-secondary: #cbd5e1;     /* Medium gray for secondary text */
+  --text-tertiary: #94a3b8;      /* Darker gray for tertiary text */
+  --text-muted: #64748b;         /* Muted gray */
+  --text-inverse: #0f172a;       /* Dark text for light backgrounds */
+  
+  --border-primary: #334155;     /* Dark gray borders */
+  --border-secondary: #475569;   /* Slightly lighter borders */
+  --border-focus: #8b5cf6;       /* Primary purple for focus */
+  --border-interactive: #c084fc; /* Accent purple for interactive borders */
+  
+  /* Status Colors - Adapted for dark theme */
+  --success-color: #22c55e;      /* Brighter green for dark bg */
+  --success-bg: #052e16;         /* Dark green background */
+  --warning-color: #eab308;      /* Brighter yellow for dark bg */
+  --warning-bg: #1f2937;         /* Dark background with yellow tint */
+  --error-color: #ef4444;        /* Brighter red for dark bg */
+  --error-bg: #1f1315;           /* Dark red background */
+  --info-color: #3b82f6;         /* Brighter blue for dark bg */
+  --info-bg: #1e1b4b;            /* Dark blue background */
+  
+  /* Shadows - Purple tinted */
+  --shadow-sm: 0 1px 2px rgba(139, 92, 246, 0.15);
+  --shadow-md: 0 4px 6px rgba(139, 92, 246, 0.2);
+  --shadow-lg: 0 10px 15px rgba(139, 92, 246, 0.25);
+  --shadow-xl: 0 20px 25px rgba(139, 92, 246, 0.3);
+  
+  /* Mathematical notation colors - Purple spectrum */
+  --math-primary: #8b5cf6;       /* Primary purple for math */
+  --math-secondary: #a855f7;     /* Secondary purple */
+  --math-highlight: #c084fc;     /* Light purple for highlighting */
+  --math-bg: #1e1b4b;            /* Dark purple for math blocks */
+  
+  /* Interactive element colors */
+  --slider-track: #334155;       /* Dark track */
+  --slider-thumb: #8b5cf6;       /* Purple thumb */
+  --slider-hover: #7c3aed;       /* Darker purple on hover */
+  
+  /* Code syntax highlighting - Purple spectrum */
+  --code-bg: #1a1a2e;            /* Dark background */
+  --code-border: #334155;        /* Dark border */
+  --code-keyword: #8b5cf6;       /* Keywords in primary purple */
+  --code-string: #c084fc;        /* Strings in accent purple */
+  --code-number: #a855f7;        /* Numbers in secondary purple */
+  --code-comment: #64748b;       /* Comments in muted gray */
+}
+
+/* Theme transition animations */
+* {
+  transition: 
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Disable transitions during theme switching to prevent flash */
+.theme-transitioning * {
+  transition: none !important;
+}
+
+/* System preference detection */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    /* Apply dark theme when system prefers dark and no explicit theme is set */
+    --primary-color: #8b5cf6;
+    --primary-hover: #7c3aed;
+    --primary-light: #1e1b4b;
+    --primary-dark: #3730a3;
+    
+    --secondary-color: #a855f7;
+    --secondary-hover: #9333ea;
+    --secondary-light: #1e1b4b;
+    
+    --accent-color: #c084fc;
+    --accent-hover: #a855f7;
+    --accent-light: #2d1b69;
+    
+    --bg-primary: #0f0f23;
+    --bg-secondary: #1a1a2e;
+    --bg-tertiary: #16213e;
+    --bg-elevated: #252545;
+    --bg-interactive: #1e1b4b;
+    
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #94a3b8;
+    --text-muted: #64748b;
+    --text-inverse: #0f172a;
+    
+    --border-primary: #334155;
+    --border-secondary: #475569;
+    --border-focus: #8b5cf6;
+    --border-interactive: #c084fc;
+    
+    --shadow-sm: 0 1px 2px rgba(139, 92, 246, 0.15);
+    --shadow-md: 0 4px 6px rgba(139, 92, 246, 0.2);
+    --shadow-lg: 0 10px 15px rgba(139, 92, 246, 0.25);
+    --shadow-xl: 0 20px 25px rgba(139, 92, 246, 0.3);
+    
+    --math-primary: #8b5cf6;
+    --math-secondary: #a855f7;
+    --math-highlight: #c084fc;
+    --math-bg: #1e1b4b;
+    
+    --slider-track: #334155;
+    --slider-thumb: #8b5cf6;
+    --slider-hover: #7c3aed;
+    
+    --code-bg: #1a1a2e;
+    --code-border: #334155;
+    --code-keyword: #8b5cf6;
+    --code-string: #c084fc;
+    --code-number: #a855f7;
+    --code-comment: #64748b;
+  }
+}
+
+/* Print styles - Always use light theme */
+@media print {
+  :root {
+    --primary-color: #059669 !important;
+    --bg-primary: #ffffff !important;
+    --bg-secondary: #ffffff !important;
+    --text-primary: #000000 !important;
+    --text-secondary: #374151 !important;
+    --border-primary: #d1d5db !important;
+  }
+}
+
+/* Accessibility: Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border-primary: #000000;
+    --border-secondary: #000000;
+    --text-secondary: #000000;
+  }
+  
+  [data-theme="dark"] {
+    --border-primary: #ffffff;
+    --border-secondary: #ffffff;
+    --text-secondary: #ffffff;
+  }
+}

@@ -1,8 +1,8 @@
 <template>
-  <div class="algebra-content">
+  <div class="topic-content">
     <header class="topic-header">
-      <h1>🔢 Algebra</h1>
-      <p class="topic-description">
+      <h1 class="topic-header__title">🔢 Algebra</h1>
+      <p class="topic-header__description">
         Master algebraic concepts from basic equations to advanced functions
       </p>
     </header>
@@ -15,20 +15,22 @@
         @click="selectSubtopic(subtopic.id)"
         :class="{ active: activeSubtopic === subtopic.id }"
       >
-        <div class="subtopic-icon">{{ subtopic.icon }}</div>
-        <h3>{{ subtopic.title }}</h3>
-        <p>{{ subtopic.description }}</p>
+        <div class="subtopic-card__icon">{{ subtopic.icon }}</div>
+        <h3 class="subtopic-card__title">{{ subtopic.title }}</h3>
+        <p class="subtopic-card__description">{{ subtopic.description }}</p>
       </div>
     </div>
     
-    <div class="subtopic-content">
+    <div class="content-section">
       <component 
         :is="currentSubtopicComponent" 
         v-if="activeSubtopic"
         :key="activeSubtopic"
       />
-      <div v-else class="select-prompt">
-        <p>👆 Select a topic above to begin learning</p>
+      <div v-else class="empty-state">
+        <div class="empty-state__icon">👆</div>
+        <div class="empty-state__message">Select a topic above to begin learning</div>
+        <div class="empty-state__description">Choose from quadratics, linear equations, exponentials, or summation notation</div>
       </div>
     </div>
   </div>
@@ -229,132 +231,25 @@ const selectSubtopic = (subtopicId) => {
 </script>
 
 <style scoped>
-.algebra-content {
-  max-width: 1000px;
-  margin: 0 auto;
-}
+/* All styles are now inherited from the centralized component system in components.css */
+/* This component uses the following centralized classes:
+   - .topic-content
+   - .topic-header, .topic-header__title, .topic-header__description
+   - .subtopic-grid, .subtopic-card, .subtopic-card__icon, .subtopic-card__title, .subtopic-card__description
+   - .content-section
+   - .empty-state, .empty-state__icon, .empty-state__message, .empty-state__description
+   - .key-concepts, .example-section
+*/
 
-.topic-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.topic-header h1 {
-  color: var(--primary-color);
-  margin-bottom: 1rem;
-  font-size: 2.5rem;
-}
-
-.topic-description {
-  font-size: 1.2rem;
-  color: #6b7280;
-}
-
-.subtopic-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 3rem;
-}
-
-.subtopic-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-  border: 2px solid transparent;
-}
-
-.subtopic-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-}
-
-.subtopic-card.active {
-  border-color: var(--primary-color);
-  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-}
-
-.subtopic-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.subtopic-card h3 {
-  color: var(--text-color);
-  margin-bottom: 0.5rem;
-}
-
-.subtopic-card p {
-  color: #6b7280;
-  font-size: 0.9rem;
-}
-
-.subtopic-content {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+/* Component-specific overrides only */
+.content-section {
   min-height: 400px;
 }
 
-.select-prompt {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 300px;
-  color: #6b7280;
-  font-size: 1.2rem;
-}
-
-.content-section h2 {
-  color: var(--primary-color);
-  margin-bottom: 1.5rem;
-}
-
-.content-section p {
-  margin-bottom: 1rem;
-  line-height: 1.7;
-}
-
-.key-concepts {
-  background: var(--bg-color);
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin: 2rem 0;
-}
-
-.key-concepts h3 {
-  color: var(--text-color);
-  margin-bottom: 1rem;
-}
-
-.key-concepts ul {
-  margin-left: 1.5rem;
-}
-
-.key-concepts li {
-  margin-bottom: 0.5rem;
-  line-height: 1.6;
-}
-
-.example-section {
-  background: #f0f9ff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-top: 2rem;
-  border-left: 4px solid var(--primary-color);
-}
-
-.example-section h3 {
-  color: var(--primary-color);
-  margin-bottom: 1rem;
-}
-
-.example-section p {
-  margin-bottom: 0.8rem;
+/* Ensure proper responsive behavior for content sections */
+@media (max-width: 767px) {
+  .content-section {
+    min-height: 300px;
+  }
 }
 </style>
