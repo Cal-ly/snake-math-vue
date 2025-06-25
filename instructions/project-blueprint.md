@@ -2,14 +2,16 @@
 
 ## Project Architecture Overview
 
-This blueprint defines the complete file structure, component organization, and implementation guidelines for the Snake Math Vue 3 interactive mathematics learning platform.
+This blueprint defines the complete file structure, component organization, and implementation guidelines for the Snake Math Vue 3 interactive mathematics learning platform. **Updated to reflect Progressive Web App (PWA) architecture with header-based navigation.**
 
 ### Core Design Principles
-1. **Simplicity**: Minimal dependencies, native Vue/Vite tools
-2. **Modularity**: Reusable components across mathematical domains
-3. **Maintainability**: Clear structure with consistent patterns
-4. **Performance**: Optimized builds with efficient component loading
-5. **Accessibility**: WCAG 2.1 AA compliance throughout
+1. **Progressive Web App**: Offline-first architecture with service worker caching
+2. **Simplicity**: Minimal dependencies, native Vue/Vite tools with PWA plugin
+3. **Modularity**: Reusable components across mathematical domains
+4. **Header Navigation**: Responsive navigation integrated into header (mobile dropdown)
+5. **Maintainability**: Clear structure with consistent patterns
+6. **Performance**: Optimized builds with efficient component loading
+7. **Accessibility**: WCAG 2.1 AA compliance throughout
 
 ## Complete File Structure
 
@@ -26,7 +28,8 @@ snake-math-vue/
 │   │
 │   ├── components/
 │   │   ├── common/                 # Shared utility components
-│   │   │   ├── TopicSidebar.vue    # Navigation sidebar
+│   │   │   ├── TopicNavigation.vue # Header navigation (responsive)
+│   │   │   ├── ThemeSwitcher.vue   # Light/dark theme toggle
 │   │   │   ├── MathRenderer.vue    # KaTeX mathematical notation
 │   │   │   ├── CodeFold.vue        # Collapsible code blocks
 │   │   │   ├── ErrorBoundary.vue   # Error handling wrapper
@@ -92,20 +95,21 @@ snake-math-vue/
 │   │   └── presets.js              # Component default configurations
 │   │
 │   └── assets/                     # Static assets
-│       ├── styles/
-│       │   ├── main.css            # Global styles and CSS variables
-│       │   ├── components.css      # Component-specific styles
-│       │   ├── responsive.css      # Responsive design utilities
-│       │   ├── accessibility.css   # Accessibility enhancements
-│       │   └── themes.css          # Light/dark theme support
-│       │
-│       ├── images/
-│       │   ├── icons/              # Mathematical symbols and icons
-│       │   ├── screenshots/        # Component preview images
-│       │   └── logos/              # Branding assets
-│       │
-│       └── fonts/                  # Custom fonts for mathematical notation
-│           └── math-fonts.css      # Font declarations
+│       └── styles/                 # Modular CSS architecture
+│           ├── main.css            # Global styles and CSS variables
+│           ├── components.css      # Component-specific styles
+│           ├── responsive.css      # Responsive design utilities
+│           └── themes.css          # Light/dark theme support
+│
+│   ├── .archive/                   # Deprecated/unused files
+│   │   ├── TopicSidebar.vue        # Old sidebar component
+│   │   ├── HelloWorld.vue          # Default Vue components
+│   │   ├── TheWelcome.vue          # Default Vue components
+│   │   ├── WelcomeItem.vue         # Default Vue components
+│   │   ├── icons/                  # Default Vue icons
+│   │   ├── logo.svg                # Default Vue logo
+│   │   ├── base.css                # Unused CSS files
+│   │   └── main.css                # Unused CSS files
 │
 ├── .github/
 │   └── workflows/
@@ -803,11 +807,13 @@ export const navigationStructure = [
 ## Build Configuration
 
 ### vite.config.js
-Optimized Vite configuration for mathematical applications:
+Optimized Vite configuration for PWA mathematical applications:
 
 ```javascript
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vueDevTools from 'vite-plugin-vue-devtools'
+import { VitePWA } from 'vite-plugin-pwa'
 import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
@@ -818,6 +824,38 @@ export default defineConfig({
         compilerOptions: {
           isCustomElement: (tag) => tag.startsWith('math-')
         }
+      }
+    }),
+    vueDevTools(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.ico'],
+      manifest: {
+        name: 'Snake Math - Interactive Mathematics Learning',
+        short_name: 'Snake Math',
+        description: 'Interactive Mathematics Learning Platform',
+        theme_color: '#6366f1',
+        background_color: '#ffffff',
+        display: 'standalone',
+        start_url: '/snake-math-vue/',
+        icons: [
+          {
+            src: 'favicon.ico',
+            sizes: '64x64 32x32 24x24 16x16',
+            type: 'image/x-icon'
+          }
+        ]
+      },
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.destination === 'document',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'documents-cache'
+            }
+          }
+        ]
       }
     })
   ],
@@ -859,7 +897,8 @@ export default defineConfig({
           
           // Common components
           common: [
-            './src/components/common/TopicSidebar.vue',
+            './src/components/common/TopicNavigation.vue',
+            './src/components/common/ThemeSwitcher.vue',
             './src/components/common/MathRenderer.vue',
             './src/components/common/CodeFold.vue'
           ],

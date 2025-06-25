@@ -2,9 +2,11 @@
 
 ## Project Vision and Intent
 
-**Snake Math** is an interactive mathematics learning platform designed to bridge mathematical concepts with programming intuition. Unlike traditional math resources, Snake Math makes abstract mathematical ideas accessible through:
+**Snake Math** is an interactive mathematics learning platform built as a **Progressive Web App (PWA)** designed to bridge mathematical concepts with programming intuition. Unlike traditional math resources, Snake Math makes abstract mathematical ideas accessible through:
 
+- **Offline-first architecture** enabling learning without internet connectivity
 - **Interactive visualizations** that respond to user input in real-time
+- **Responsive design** with header-based navigation optimized for all devices
 - **Programming analogies** connecting math notation to familiar code patterns
 - **Hands-on exploration** allowing learners to experiment with mathematical relationships
 - **Progressive complexity** from foundational concepts to advanced applications
@@ -23,20 +25,24 @@ Mathematics becomes intuitive when learners can:
 
 ## Technology Stack and Architecture
 
-### Core Framework: Vue 3 + Vite
-**Why Vue 3 + Vite?**
+### Core Framework: Vue 3 + Vite + PWA
+**Why Vue 3 + Vite + PWA?**
+- **Progressive Web App**: Offline capability with service worker caching
 - **Low complexity**: Minimal learning curve and tech debt
-- **Native tools**: Leverages Vue/Vite ecosystem without heavy dependencies
+- **Native tools**: Leverages Vue/Vite ecosystem with PWA plugin
 - **Mathematical focus**: Composition API ideal for reactive mathematical calculations
 - **Performance**: Vite's fast development and optimized builds
 - **Component architecture**: Natural organization for mathematical widgets
+- **Cross-platform**: Installable as native app on all devices
 
 ### Key Technical Decisions
-1. **Single-page application** - No Vue Router complexity, component-based navigation
-2. **Native CSS** - No CSS frameworks, custom responsive design
-3. **KaTeX integration** - Lightweight mathematical notation rendering
-4. **Canvas API** - Direct canvas manipulation for visualizations
-5. **Component-first architecture** - Reusable mathematical widgets
+1. **Progressive Web App** - Offline-first with service worker caching
+2. **Header-based navigation** - Responsive navigation integrated into header
+3. **Single-page application** - No Vue Router complexity, component-based navigation
+4. **Native CSS** - No CSS frameworks, custom responsive design with theme support
+5. **KaTeX integration** - Lightweight mathematical notation rendering
+6. **Canvas API** - Direct canvas manipulation for visualizations
+7. **Component-first architecture** - Reusable mathematical widgets
 
 ### Project Structure
 ```
@@ -46,7 +52,8 @@ snake-math-vue/
 │   ├── main.js                     # Vue application entry
 │   ├── components/
 │   │   ├── common/                 # Shared components
-│   │   │   ├── TopicSidebar.vue    # Navigation sidebar
+│   │   │   ├── TopicNavigation.vue # Header navigation (responsive)
+│   │   │   ├── ThemeSwitcher.vue   # Light/dark theme toggle
 │   │   │   ├── MathRenderer.vue    # KaTeX integration
 │   │   │   └── CodeFold.vue        # Collapsible code blocks
 │   │   ├── topics/                 # Main topic components
@@ -66,11 +73,13 @@ snake-math-vue/
 │   ├── utils/
 │   │   ├── mathHelpers.js          # Mathematical utility functions
 │   │   └── graphing.js             # Canvas visualization utilities
-│   └── assets/
-│       ├── styles/
-│       │   ├── main.css            # Global styles and variables
-│       │   └── components.css      # Component-specific styles
-│       └── images/
+│   ├── assets/
+│   │   └── styles/                 # Modular CSS architecture
+│   │       ├── main.css            # Global styles and variables
+│   │       ├── components.css      # Component-specific styles
+│   │       ├── responsive.css      # Responsive design utilities
+│   │       └── themes.css          # Light/dark theme support
+│   └── .archive/                   # Deprecated/unused files
 ├── public/
 │   ├── index.html
 │   └── favicon.ico
@@ -215,11 +224,14 @@ npm run deploy       # Build and deploy to GitHub Pages
 ## Implementation Phases
 
 ### Phase 1: Foundation (Completed)
-- ✅ Vue 3 + Vite project setup
-- ✅ Basic application structure with sidebar navigation
+- ✅ Vue 3 + Vite project setup with PWA configuration
+- ✅ Progressive Web App with service worker and offline capability
+- ✅ Header-based responsive navigation (desktop horizontal, mobile dropdown)
+- ✅ Theme system with light/dark mode support
 - ✅ KaTeX integration for mathematical notation
-- ✅ Responsive design foundation
+- ✅ Responsive design foundation with mobile-first approach
 - ✅ GitHub Pages deployment pipeline
+- ✅ Project cleanup with .archive system for unused files
 
 ### Phase 2: Core Content (In Progress)
 - ✅ Algebra topic with interactive quadratic explorer
@@ -237,7 +249,7 @@ npm run deploy       # Build and deploy to GitHub Pages
 - 🔲 Performance optimization (code splitting, lazy loading)
 - 🔲 SEO improvements (meta tags, structured data)
 - 🔲 Analytics integration for usage insights
-- 🔲 Progressive Web App features
+- ✅ Progressive Web App features (service worker, manifest, offline capability)
 
 ## Success Metrics
 

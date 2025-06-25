@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is "Snake Math Vue" - an interactive mathematics learning platform built with Vue 3 and Vite. The project is designed as a single-page application with component-based navigation, focusing on educational math content with interactive visualizations.
+This is "Snake Math Vue" - an interactive mathematics learning platform built as a **Progressive Web App (PWA)** with Vue 3 and Vite. The project is designed as a single-page application with header-based navigation, focusing on educational math content with interactive visualizations and offline capability.
 
 ## Development Commands
 
@@ -25,31 +25,49 @@ npm run preview
 ## Architecture
 
 ### Core Structure
+- **Progressive Web App (PWA)** with offline capability and service worker
 - **Single-page application** using Vue 3 Composition API
-- **Component-based navigation** without Vue Router
-- **Vite** as build tool with alias support (`@` points to `src/`)
-- **Math rendering** intended to use KaTeX for mathematical expressions
-- **Responsive design** with mobile-first approach
+- **Header-based navigation** with responsive design (no Vue Router)
+- **Bootstrap 5.3.7** with custom Snake Math theme and FontAwesome icons
+- **Vite** as build tool with PWA plugin and alias support (`@` points to `src/`)
+- **Math rendering** using KaTeX for mathematical expressions
+- **Mobile-first responsive design** with header navigation
 
 ### Key Design Principles
 1. **Modular topic organization**: Each math subject (Basics, Algebra, etc.) is a separate component
-2. **Subtopic switching**: Dynamic content within each topic using component switching
-3. **Interactive widgets**: Reusable visualization components across topics
-4. **Progressive enhancement**: Start with basic content, add interactivity incrementally
+2. **Header-based navigation**: Responsive navigation in header (desktop horizontal, mobile dropdown)
+3. **Subtopic switching**: Dynamic content within each topic using component switching
+4. **Interactive widgets**: Reusable visualization components across topics
+5. **Progressive enhancement**: Start with basic content, add interactivity incrementally
+6. **Offline-first**: PWA with service worker for offline functionality
 
 ### Current State
-- Basic Vue 3 project scaffolding with default components
-- Standard Vite configuration with Vue plugin and devtools
-- Project instructions indicate this should become a comprehensive math learning platform
-- Intended to include topics: Basics, Algebra, Statistics, Trigonometry, Linear Algebra, Calculus
+- **Fully configured PWA** with service worker and offline capability
+- **Header-based responsive navigation** (desktop horizontal, mobile dropdown)
+- **Bootstrap 5.3.7 integration** with custom Snake Math theme (#10b981 green)
+- **Dark theme system** using Bootstrap's data-bs-theme with proper header styling
+- **FontAwesome icons** integrated throughout with topic-specific icons
+- **Production-ready build system** with Vite PWA plugin (374KB CSS, 341KB JS)
+- **Complete responsive design** for all device sizes
+- **Modular component architecture** with topic-based content switching
+- **Math rendering ready** with KaTeX integration
+- Includes topics: Basics, Algebra, Statistics, Trigonometry, Linear Algebra, Calculus
 
-### Planned Features (from project instructions)
-- Topic sidebar with navigation
-- Math expression rendering with KaTeX
-- Interactive visualizations (quadratic functions, unit circle, etc.)
-- Practice problems with feedback
-- Responsive mobile design
-- GitHub Pages deployment ready
+### Implemented Features
+- ✅ **PWA Configuration**: Service worker, manifest, offline caching
+- ✅ **Responsive Header Navigation**: TopicNavigation component with mobile dropdown
+- ✅ **Bootstrap Integration**: Custom theme with Snake Math branding
+- ✅ **FontAwesome Icons**: Topic-specific icons throughout application
+- ✅ **Dark Theme System**: Bootstrap data-bs-theme with proper styling
+- ✅ **Static Build Ready**: Optimized for GitHub Pages deployment
+- ✅ **Mobile-First Design**: Responsive across all breakpoints
+
+### Remaining Features to Implement
+- **Algebra Content**: Quadratic visualizer, equation solver (NEXT PRIORITY)
+- **Interactive Widgets**: Reusable math visualization components
+- **Math Rendering**: KaTeX integration for mathematical expressions
+- **Content Development**: Rich content for all 6 topic components
+- **Practice Problems**: Interactive exercises with feedback
 
 ## Implementation Notes
 
@@ -58,12 +76,54 @@ npm run preview
 2. Create topic components in `src/components/topics/`
 3. Build reusable widgets in `src/components/widgets/`
 4. Use Vue 3 Composition API with `<script setup>`
-5. Install KaTeX when implementing math rendering: `npm install katex`
+5. Maintain PWA performance - optimize for offline usage
+6. Test responsive design across all breakpoints
 
-### File Organization (planned)
-- `src/components/common/` - Shared components like navigation, math renderer
-- `src/components/topics/` - Main topic content components
-- `src/components/widgets/` - Interactive learning widgets
-- `src/utils/` - Math helpers and utility functions
+### File Organization (current)
+- `src/components/common/` - Shared components (TopicNavigation, ThemeSwitcher, MathRenderer)
+- `src/components/topics/` - Main topic content components (6 topics implemented)
+- `src/components/widgets/` - Interactive learning widgets (to be implemented)
+- `src/utils/` - Math helpers and utility functions (to be implemented)
+- `src/assets/styles/` - Bootstrap custom theme (bootstrap-custom.scss, main.css)
+- `.archive/` - Deprecated/unused files (includes old components, icons, assets)
+- `instructions/` - Project documentation and task tracking
+- `HANDOFF.md` - Current state summary and next steps for developers
 
-The project is currently in initial scaffolding state and needs implementation of the math learning platform as described in the instructions.
+### PWA Features
+- **Service Worker**: Automatic updates and offline caching
+- **Web App Manifest**: Installable as native app
+- **Responsive Design**: Works on all devices
+- **Static Build**: Deployable to any static hosting (GitHub Pages ready)
+
+### Architecture Changes Made
+- **Navigation**: Moved from sidebar to responsive header navigation
+- **Build System**: Added PWA plugin with workbox configuration
+- **Design System**: Integrated Bootstrap 5.3.7 with custom Snake Math theme
+- **Icons**: Added FontAwesome with topic-specific icons (calculator, chart-bar, etc.)
+- **Theme System**: Bootstrap data-bs-theme for proper light/dark mode
+- **Layout**: Full-width content layout optimized for all screen sizes
+- **Dependencies**: Added vite-plugin-pwa, workbox-window, bootstrap, @fortawesome/fontawesome-free
+
+## Development Guidelines
+
+### Bootstrap Usage
+- Use Bootstrap utility classes over custom CSS when possible
+- Follow mobile-first responsive design principles
+- Leverage Bootstrap's grid system and components
+- Custom theme variables defined in `src/assets/styles/bootstrap-custom.scss`
+
+### FontAwesome Icons
+- Topic icons: `fas fa-book` (Basics), `fas fa-calculator` (Algebra), etc.
+- UI icons: `fas fa-bars` (menu), `fas fa-times` (close), etc.
+- Use consistent icon sizing and styling
+
+### Theme System
+- Bootstrap's `data-bs-theme="dark"` for dark mode
+- Custom CSS variables for Snake Math branding
+- Automatic system preference detection with manual override
+
+### Content Development
+- Follow patterns from `instructions/old-concept-page-template.md`
+- Use modular component structure for reusability
+- Implement interactive widgets in `src/components/widgets/`
+- Maintain accessibility standards (ARIA labels, keyboard navigation)

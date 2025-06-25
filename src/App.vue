@@ -1,25 +1,30 @@
 <template>
   <div id="app" class="app-container">
-    <header class="app-header">
-      <div class="header-content">
-        <div class="header-title">
-          <h1>🐍 Snake Math</h1>
-          <p>Interactive Mathematics Learning Platform</p>
+    <header class="app-header bg-light border-bottom">
+      <div class="header-content container-fluid">
+        <div class="header-left">
+          <div class="header-title">
+            <h3 class="text-primary mb-0">🐍 Snake Math</h3>
+            <small class="text-muted d-none d-md-block">Interactive Mathematics Learning Platform</small>
+          </div>
         </div>
-        <div class="header-controls">
+        
+        <div class="header-center">
+          <TopicNavigation 
+            :topics="mathTopics"
+            :active-topic="activeTopic"
+            @topic-change="handleTopicChange"
+          />
+        </div>
+        
+        <div class="header-right">
           <ThemeSwitcher />
         </div>
       </div>
     </header>
     
     <div class="app-content">
-      <TopicSidebar 
-        :topics="mathTopics"
-        :active-topic="activeTopic"
-        @topic-change="handleTopicChange"
-      />
-      
-      <main class="main-content">
+      <main class="main-content container-fluid py-4">
         <component 
           :is="currentTopicComponent" 
           :key="activeTopic"
@@ -31,7 +36,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import TopicSidebar from '@/components/common/TopicSidebar.vue'
+import TopicNavigation from '@/components/common/TopicNavigation.vue'
 import ThemeSwitcher from '@/components/common/ThemeSwitcher.vue'
 import BasicsContent from '@/components/topics/BasicsContent.vue'
 import AlgebraContent from '@/components/topics/AlgebraContent.vue'
@@ -43,12 +48,12 @@ import CalculusContent from '@/components/topics/CalculusContent.vue'
 const activeTopic = ref('basics')
 
 const mathTopics = [
-  { id: 'basics', title: 'Basics', icon: '📚' },
-  { id: 'algebra', title: 'Algebra', icon: '🔢' },
-  { id: 'statistics', title: 'Statistics', icon: '📊' },
-  { id: 'trigonometry', title: 'Trigonometry', icon: '📐' },
-  { id: 'linear-algebra', title: 'Linear Algebra', icon: '🔺' },
-  { id: 'calculus', title: 'Calculus', icon: '∫' }
+  { id: 'basics', title: 'Basics', icon: 'fas fa-book' },
+  { id: 'algebra', title: 'Algebra', icon: 'fas fa-calculator' },
+  { id: 'statistics', title: 'Statistics', icon: 'fas fa-chart-bar' },
+  { id: 'trigonometry', title: 'Trigonometry', icon: 'fas fa-drafting-compass' },
+  { id: 'linear-algebra', title: 'Linear Algebra', icon: 'fas fa-vector-square' },
+  { id: 'calculus', title: 'Calculus', icon: 'fas fa-infinity' }
 ]
 
 const topicComponents = {
@@ -74,142 +79,103 @@ const handleTopicChange = (topicId) => {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: var(--bg-primary);
 }
 
 .app-header {
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-primary);
-  box-shadow: var(--shadow-sm);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
 .header-content {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas: "left center right";
   align-items: center;
-  padding: var(--spacing-responsive-md) var(--spacing-responsive-lg);
-  max-width: var(--container-2xl);
-  margin: 0 auto;
-  gap: var(--spacing-responsive-md);
-  flex-wrap: wrap;
+  padding: 1rem 1.5rem;
+  gap: 1.5rem;
+  min-height: 80px;
 }
 
-.header-title {
-  flex: 1;
-  min-width: 250px;
+.header-left {
+  grid-area: left;
+  justify-self: start;
 }
 
-.header-title h1 {
-  color: var(--primary-color);
-  margin-bottom: var(--spacing-responsive-xs);
-  font-size: var(--font-size-responsive-2xl);
-  font-weight: 600;
-  line-height: 1.2;
+.header-center {
+  grid-area: center;
+  justify-self: center;
 }
 
-.header-title p {
-  color: var(--text-secondary);
-  margin: 0;
-  font-size: var(--font-size-responsive-base);
-  line-height: 1.4;
+.header-right {
+  grid-area: right;
+  justify-self: end;
 }
 
-.header-controls {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-responsive-sm);
-  flex-shrink: 0;
-}
+/* Bootstrap handles the styling through utility classes */
 
 .app-content {
-  display: flex;
   flex: 1;
-  min-height: calc(100vh - var(--header-height-desktop));
-  max-width: var(--container-2xl);
-  margin: 0 auto;
   width: 100%;
 }
 
 .main-content {
-  flex: 1;
-  padding: var(--spacing-responsive-lg);
-  overflow-y: auto;
-  background-color: var(--bg-primary);
+  /* Bootstrap handles padding through py-4 class */
+  min-height: calc(100vh - 120px);
 }
 
 /* Tablet responsive */
 @media (max-width: 1023px) and (min-width: 768px) {
-  .app-content {
-    min-height: calc(100vh - var(--header-height-tablet));
-  }
-  
   .main-content {
-    padding: var(--spacing-responsive-md);
+    min-height: calc(100vh - 120px);
   }
 }
 
 /* Mobile responsive */
 @media (max-width: 767px) {
   .header-content {
-    flex-direction: column;
-    text-align: center;
-    padding: var(--spacing-responsive-sm);
-    gap: var(--spacing-responsive-sm);
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 
+      "left right"
+      "center center";
+    gap: 0.75rem;
+    padding: 0.75rem;
+    min-height: auto;
   }
   
-  .header-title {
-    min-width: auto;
-    text-align: center;
+  .header-left {
+    text-align: left;
   }
   
-  .header-title h1 {
-    font-size: var(--font-size-responsive-xl);
-  }
-  
-  .header-title p {
-    font-size: var(--font-size-responsive-sm);
-  }
-  
-  .app-content {
-    flex-direction: column;
-    min-height: calc(100vh - var(--header-height-mobile));
+  .header-center {
+    justify-self: stretch;
+    margin-top: 0.5rem;
   }
   
   .main-content {
-    padding: var(--spacing-responsive-sm);
+    min-height: calc(100vh - 140px);
   }
 }
 
 /* Extra small mobile */
 @media (max-width: 475px) {
   .header-content {
-    padding: var(--spacing-responsive-xs);
-  }
-  
-  .header-title h1 {
-    font-size: var(--font-size-responsive-lg);
-  }
-  
-  .header-title p {
-    font-size: var(--font-size-responsive-xs);
+    padding: 0.5rem;
   }
   
   .main-content {
-    padding: var(--spacing-responsive-xs);
+    min-height: calc(100vh - 140px);
   }
 }
 
 /* Large desktop optimization */
 @media (min-width: 1536px) {
   .header-content {
-    padding: var(--spacing-responsive-lg) var(--spacing-responsive-xl);
+    padding: 1.5rem 2rem;
   }
   
   .main-content {
-    padding: var(--spacing-responsive-xl);
+    min-height: calc(100vh - 120px);
   }
 }
 </style>

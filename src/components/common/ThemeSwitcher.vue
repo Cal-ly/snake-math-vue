@@ -3,13 +3,13 @@
     <button
       @click="toggleTheme"
       :aria-label="themeLabel"
-      class="theme-button"
-      :class="{ 'theme-button--dark': isDark }"
+      class="btn btn-outline-secondary d-flex align-items-center"
+      :class="{ 'active': isDark }"
     >
-      <span class="theme-icon" :class="themeIconClass">
+      <span class="theme-icon me-2" :class="themeIconClass">
         {{ themeIcon }}
       </span>
-      <span class="theme-text">{{ themeText }}</span>
+      <span class="theme-text d-none d-sm-inline">{{ themeText }}</span>
     </button>
   </div>
 </template>
@@ -73,10 +73,11 @@ const applyTheme = (theme) => {
   // Add transition class to prevent flash
   document.documentElement.classList.add('theme-transitioning')
   
+  // Use Bootstrap's data-bs-theme attribute
   if (theme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark')
+    document.documentElement.setAttribute('data-bs-theme', 'dark')
   } else {
-    document.documentElement.removeAttribute('data-theme')
+    document.documentElement.removeAttribute('data-bs-theme')
   }
   
   // Remove transition class after a brief delay
@@ -195,53 +196,15 @@ defineExpose({
   align-items: center;
 }
 
-.theme-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-primary);
-  border-radius: 8px;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0.875rem;
-  font-weight: 500;
-  min-height: 40px;
-  position: relative;
-  overflow: hidden;
-}
-
-.theme-button:hover {
-  background: var(--bg-interactive);
-  border-color: var(--border-interactive);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-.theme-button:focus {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 2px;
-}
-
-.theme-button:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-sm);
-}
-
-.theme-button--dark {
-  background: var(--bg-tertiary);
-}
+/* Bootstrap handles most button styling, we just add theme-specific enhancements */
 
 .theme-icon {
-  font-size: 1.125rem;
+  font-size: 1rem;
   transition: all 0.3s ease;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  min-width: 16px;
 }
 
 .theme-icon--sun {
@@ -253,7 +216,6 @@ defineExpose({
 }
 
 .theme-text {
-  font-size: 0.875rem;
   white-space: nowrap;
 }
 
@@ -281,40 +243,12 @@ defineExpose({
 }
 
 /* Hover effects */
-.theme-button:hover .theme-icon {
+.btn:hover .theme-icon {
   transform: scale(1.1);
-}
-
-/* Focus ring animation */
-.theme-button:focus-visible {
-  animation: focus-pulse 0.3s ease;
-}
-
-@keyframes focus-pulse {
-  0% {
-    box-shadow: 0 0 0 0 var(--primary-color);
-  }
-  100% {
-    box-shadow: 0 0 0 4px transparent;
-  }
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  .theme-button {
-    border-width: 2px;
-    border-color: currentColor;
-  }
-  
-  .theme-button:hover {
-    background: var(--primary-color);
-    color: var(--text-inverse);
-  }
 }
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  .theme-button,
   .theme-icon {
     transition: none;
   }
@@ -324,27 +258,8 @@ defineExpose({
     animation: none;
   }
   
-  .theme-button:hover .theme-icon {
+  .btn:hover .theme-icon {
     transform: none;
-  }
-}
-
-/* Mobile optimizations */
-@media (max-width: 768px) {
-  .theme-button {
-    padding: 0.75rem;
-    border-radius: 12px;
-    min-height: 44px; /* iOS touch target minimum */
-  }
-  
-  .theme-text {
-    display: none; /* Hide text on mobile, show icon only */
-  }
-  
-  .theme-icon {
-    width: 24px;
-    height: 24px;
-    font-size: 1.25rem;
   }
 }
 

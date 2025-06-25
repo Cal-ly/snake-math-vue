@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <style>
+    .snake-body { fill: #10b981; }
+    .snake-head { fill: #059669; }
+    .snake-eye { fill: #ffffff; }
+    .snake-pupil { fill: #000000; }
+  </style>
+  
+  <!-- Snake body segments -->
+  <circle cx="8" cy="16" r="4" class="snake-body"/>
+  <circle cx="16" cy="16" r="4" class="snake-body"/>
+  <circle cx="24" cy="12" r="4" class="snake-head"/>
+  
+  <!-- Snake head details -->
+  <circle cx="22" cy="10" r="1" class="snake-eye"/>
+  <circle cx="26" cy="10" r="1" class="snake-eye"/>
+  <circle cx="22" cy="10" r="0.3" class="snake-pupil"/>
+  <circle cx="26" cy="10" r="0.3" class="snake-pupil"/>
+  
+  <!-- Snake tongue -->
+  <path d="M24,8 L24,6 M23,6 L25,6" stroke="#dc2626" stroke-width="0.5" fill="none"/>
+</svg>

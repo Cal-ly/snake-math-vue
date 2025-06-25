@@ -1,8 +1,13 @@
 /* Snake Math Vue - Main Stylesheet */
 
-/* Import theme system and responsive utilities */
+/* Import Custom Bootstrap with our design system */
+@import './bootstrap-custom.scss';
+
+/* Import FontAwesome icons */
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+/* Import additional custom styles */
 @import './themes.css';
-@import './responsive.css';
 @import './components.css';
 
 /* Reset and base styles */
