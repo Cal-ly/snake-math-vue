@@ -72,22 +72,27 @@ npm run preview
 ## Implementation Notes
 
 ### When adding new features:
-1. Follow the single-page app pattern - use component switching rather than routing
-2. Create topic components in `src/components/topics/`
-3. Build reusable widgets in `src/components/widgets/`
-4. Use Vue 3 Composition API with `<script setup>`
-5. Maintain PWA performance - optimize for offline usage
-6. Test responsive design across all breakpoints
+1. **Follow modular architecture** - Create subtopics in topic-specific folders
+2. **Use established patterns** - Reference `DESIGN-PRINCIPLES.md` for component structure
+3. Follow the single-page app pattern - use component switching rather than routing
+4. Create topic components in `src/components/topics/[topic]/`
+5. Build reusable widgets in `src/components/widgets/`
+6. Use Vue 3 Composition API with `<script setup>`
+7. Maintain PWA performance - optimize for offline usage
+8. Test responsive design across all breakpoints
 
 ### File Organization (current)
 - `src/components/common/` - Shared components (TopicNavigation, ThemeSwitcher, MathRenderer)
 - `src/components/topics/` - Main topic content components (6 topics implemented)
+  - `algebra/` - Modular algebra subtopics (QuadraticsContent.vue, LinearContent.vue, etc.)
+  - `[other-topics]/` - Future modular subtopic implementations
 - `src/components/widgets/` - Interactive learning widgets (to be implemented)
 - `src/utils/` - Math helpers and utility functions (to be implemented)
 - `src/assets/styles/` - Bootstrap custom theme (bootstrap-custom.scss, main.css)
 - `.archive/` - Deprecated/unused files (includes old components, icons, assets)
 - `instructions/` - Project documentation and task tracking
 - `HANDOFF.md` - Current state summary and next steps for developers
+- `DESIGN-PRINCIPLES.md` - **Comprehensive design guide and component patterns**
 
 ### PWA Features
 - **Service Worker**: Automatic updates and offline caching
@@ -123,7 +128,31 @@ npm run preview
 - Automatic system preference detection with manual override
 
 ### Content Development
+- **Modular Architecture**: Each subtopic in separate .vue file (e.g., `topics/algebra/QuadraticsContent.vue`)
+- **Design Standards**: **MUST follow `DESIGN-PRINCIPLES.md`** for all new components
+- **File Organization**: Group related subtopics in topic folders for 40+ subtopics scalability
 - Follow patterns from `instructions/old-concept-page-template.md`
 - Use modular component structure for reusability
 - Implement interactive widgets in `src/components/widgets/`
 - Maintain accessibility standards (ARIA labels, keyboard navigation)
+
+### Scalability for 40+ Subtopics
+- **Recommended Structure**: `src/components/topics/[topic]/[subtopic]Content.vue`
+- **Example**: 
+  ```
+  topics/
+  ├── algebra/
+  │   ├── QuadraticsContent.vue
+  │   ├── LinearContent.vue  
+  │   ├── ExponentialsContent.vue
+  │   └── SummationContent.vue
+  ├── calculus/
+  │   ├── LimitsContent.vue
+  │   ├── DerivativesContent.vue
+  │   └── IntegralsContent.vue
+  └── statistics/
+      ├── DescriptiveStatsContent.vue
+      └── ProbabilityContent.vue
+  ```
+- **Benefits**: Easier maintenance, faster development, better code organization
+- **Import Pattern**: Import specific subtopic components in main topic component

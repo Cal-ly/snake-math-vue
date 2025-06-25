@@ -6,12 +6,14 @@ This blueprint defines the complete file structure, component organization, and 
 
 ### Core Design Principles
 1. **Progressive Web App**: Offline-first architecture with service worker caching
-2. **Simplicity**: Minimal dependencies, native Vue/Vite tools with PWA plugin
-3. **Modularity**: Reusable components across mathematical domains
-4. **Header Navigation**: Responsive navigation integrated into header (mobile dropdown)
-5. **Maintainability**: Clear structure with consistent patterns
-6. **Performance**: Optimized builds with efficient component loading
-7. **Accessibility**: WCAG 2.1 AA compliance throughout
+2. **Modular Architecture**: Scalable to 40+ subtopics with topic-specific folders
+3. **Design System Compliance**: All components must follow `DESIGN-PRINCIPLES.md`
+4. **Simplicity**: Minimal dependencies, native Vue/Vite tools with PWA plugin
+5. **Modularity**: Reusable components across mathematical domains
+6. **Header Navigation**: Responsive navigation integrated into header (mobile dropdown)
+7. **Maintainability**: Clear structure with consistent patterns
+8. **Performance**: Optimized builds with efficient component loading
+9. **Accessibility**: WCAG 2.1 AA compliance throughout
 
 ## Complete File Structure
 

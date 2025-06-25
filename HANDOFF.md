@@ -29,18 +29,20 @@ The Snake Math Vue project has been successfully converted to a **Progressive We
 
 ## Next Steps (Priority Order)
 
-### 1. **Implement Algebra Content Component** 🎯 IMMEDIATE
-**Goal**: Create rich, interactive algebra content following project patterns
-**Files to create/modify**:
-- `src/components/topics/AlgebraContent.vue` (enhance existing)
-- Inspiration sources: `old-concept-page-template.md`, `project-outline.md`, `project-blueprint.md`
+### 1. **Expand Algebra Subtopics Using Modular Pattern** 🎯 IMMEDIATE
+**Goal**: Add more algebra subtopics following the established modular architecture
+**Files to create**:
+- `src/components/topics/algebra/InequalitiesContent.vue`
+- `src/components/topics/algebra/SystemsContent.vue`
+- `src/components/topics/algebra/PolynomialsContent.vue`
 
-**Requirements**:
-- Use FontAwesome calculator icon (`fas fa-calculator`)
-- Bootstrap responsive classes for mobile-first design
-- Interactive quadratic function visualizer
-- Step-by-step equation solving
-- Modular component structure
+**Pattern to Follow** (established in existing files):
+- Bootstrap card-based layout with primary header
+- Interactive sliders and form controls
+- Real-time mathematical calculations
+- Programming analogies in content
+- FontAwesome icons for visual hierarchy
+- Mobile-responsive design with sticky sidebars
 
 **Reference materials**:
 ```bash
@@ -50,33 +52,36 @@ cat instructions/project-outline.md
 cat instructions/project-blueprint.md
 ```
 
-### 2. **Add Interactive Mathematical Widgets** 🎯 HIGH PRIORITY
+### 2. **Create Topic Folders Following Modular Pattern** 🎯 HIGH PRIORITY
+**Goal**: Implement modular architecture across all 6 topics
+**Files to create**:
+- `src/components/topics/statistics/DescriptiveStatsContent.vue`
+- `src/components/topics/statistics/ProbabilityContent.vue`
+- `src/components/topics/calculus/LimitsContent.vue`
+- `src/components/topics/calculus/DerivativesContent.vue`
+- `src/components/topics/trigonometry/UnitCircleContent.vue`
+- `src/components/topics/trigonometry/TriangleTrigContent.vue`
+
+**Modular Architecture Benefits**:
+- Each subtopic isolated for easier maintenance
+- Faster development with reusable patterns
+- Better organization for 40+ subtopics
+- Automatic code splitting and lazy loading
+
+### 3. **Add Interactive Mathematical Widgets** 🎯 MEDIUM PRIORITY
 **Goal**: Create reusable visualization components
 **Files to create**:
-- `src/components/widgets/QuadraticVisualizer.vue`
-- `src/components/widgets/EquationSolver.vue`
-- `src/components/widgets/GraphingCalculator.vue`
+- `src/components/widgets/GraphingCanvas.vue` - Reusable graphing component
+- `src/components/widgets/InteractiveSlider.vue` - Mathematical parameter control
+- `src/components/widgets/EquationRenderer.vue` - Enhanced KaTeX wrapper
+- `src/components/widgets/StepByStepSolver.vue` - Collapsible solution steps
 
-**Requirements**:
-- Canvas-based visualizations using HTML5 Canvas
-- Bootstrap styling with math-controls classes from custom SCSS
-- KaTeX integration for mathematical expressions
-- Responsive design for all screen sizes
-
-### 3. **Expand Other Topic Components** 🎯 MEDIUM PRIORITY  
-**Goal**: Complete content for all 6 mathematical topics
-**Components to enhance**:
-- `BasicsContent.vue` - Number theory, arithmetic operations
-- `StatisticsContent.vue` - Data visualization, probability
-- `TrigonometryContent.vue` - Unit circle, wave functions
-- `LinearAlgebraContent.vue` - Vector operations, matrices
-- `CalculusContent.vue` - Derivatives, integrals, limits
-
-**Pattern to follow**:
-- Header with FontAwesome icon and topic title
-- Bootstrap card-based content sections
-- Interactive widgets where appropriate
-- Mobile-responsive layout
+**Widget Pattern**:
+- Self-contained Vue components with props interface
+- Bootstrap styling for consistency
+- Mobile-responsive touch controls
+- Accessibility features (ARIA labels, keyboard navigation)
+- Canvas-based visualizations where appropriate
 
 ## Development Commands
 
@@ -96,13 +101,28 @@ npm install [package-name]
 
 ## Architecture Notes
 
-### Component Structure
+### Modular Component Structure
 ```
 src/components/
 ├── common/          # Shared components (navigation, theme switcher)
 ├── topics/          # Main content components (6 topics)
+│   ├── algebra/     # Modular algebra subtopics
+│   │   ├── QuadraticsContent.vue
+│   │   ├── LinearContent.vue
+│   │   ├── ExponentialsContent.vue
+│   │   └── SummationContent.vue
+│   ├── calculus/    # Future modular calculus subtopics
+│   ├── statistics/  # Future modular statistics subtopics
+│   └── [other topics]/
 └── widgets/         # Reusable interactive components
 ```
+
+### Modular Architecture Benefits
+- **Scalability**: Supports 40+ subtopics efficiently
+- **Maintainability**: Each subtopic isolated in separate file
+- **Performance**: Automatic code splitting and lazy loading
+- **Development**: Multiple developers can work simultaneously
+- **Reusability**: Components can be shared across topics
 
 ### Styling System
 - **Bootstrap 5.3.7** with custom Snake Math theme
