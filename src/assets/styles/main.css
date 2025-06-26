@@ -6,9 +6,7 @@
 /* Import FontAwesome icons */
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 
-/* Import additional custom styles */
-@import './themes.css';
-@import './components.css';
+/* Additional custom styles handled by Bootstrap */
 
 /* Reset and base styles */
 *,

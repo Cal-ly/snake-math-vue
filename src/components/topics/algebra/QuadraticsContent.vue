@@ -11,7 +11,7 @@
         <strong>Standard Form:</strong> Like defining a function signature in code
       </div>
       <div class="text-center mb-3">
-        <MathRenderer 
+        <MathJaxRenderer 
           expression="f(x) = ax^2 + bx + c" 
           :display-mode="true" 
         />
@@ -20,49 +20,50 @@
     </div>
   </div>
 
-  <!-- Interactive Controls Card -->
+  <!-- Interactive Quadratic Explorer (Standard Layout) -->
   <div class="card mb-4">
-    <div class="card-header">
-      <h3 class="h5 mb-0"><i class="fas fa-sliders-h me-2"></i>Interactive Controls</h3>
+    <div class="card-header bg-primary text-white">
+      <h3 class="h5 mb-0"><i class="fas fa-chart-line me-2"></i>Interactive Quadratic Explorer</h3>
     </div>
     <div class="card-body">
-      <div class="row g-3 mb-4">
-        <div class="col-md-4">
-          <label class="form-label">Coefficient a: <span class="badge bg-primary">{{ a }}</span></label>
-          <input type="range" class="form-range" v-model.number="a" min="-3" max="3" step="0.1">
-          <small class="text-muted">Controls parabola direction and width</small>
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Coefficient b: <span class="badge bg-primary">{{ b }}</span></label>
-          <input type="range" class="form-range" v-model.number="b" min="-10" max="10" step="0.5">
-          <small class="text-muted">Shifts the parabola horizontally</small>
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Coefficient c: <span class="badge bg-primary">{{ c }}</span></label>
-          <input type="range" class="form-range" v-model.number="c" min="-10" max="10" step="0.5">
-          <small class="text-muted">Y-intercept (where parabola crosses y-axis)</small>
-        </div>
-      </div>
-      
-      <div class="current-equation text-center p-3 bg-light rounded">
-        <MathRenderer 
+      <!-- 1. Generated Equation -->
+      <div class="equation-section text-center p-3 bg-light rounded mb-4">
+        <h6 class="text-muted mb-2">Current Function:</h6>
+        <MathJaxRenderer 
           :expression="`f(x) = ${a}x^2 + ${b}x + ${c}`" 
           :display-mode="true" 
         />
       </div>
-    </div>
-  </div>
-
-  <!-- Visual Graph Card -->
-  <div class="card mb-4">
-    <div class="card-header">
-      <h3 class="h5 mb-0"><i class="fas fa-chart-area me-2"></i>Interactive Graph</h3>
-    </div>
-    <div class="card-body">
-      <div class="text-center">
-        <canvas ref="graphCanvas" width="600" height="400" class="rounded" style="max-width: 100%; height: auto; background-color: #f8f9fa; border: 1px solid #dee2e6;"></canvas>
+      
+      <!-- 2. Graph Visualization -->
+      <div class="visualization-section mb-4">
+        <div class="text-center">
+          <canvas ref="graphCanvas" width="600" height="400" class="rounded" style="max-width: 100%; height: auto; background-color: #f8f9fa; border: 1px solid #dee2e6;"></canvas>
+        </div>
+        <p class="text-muted text-center mt-2 small">Interactive parabola updates as you change coefficients</p>
       </div>
-      <p class="text-muted text-center mt-2 small">Interactive parabola updates as you change coefficients</p>
+      
+      <!-- 3. Controls -->
+      <div class="controls-section">
+        <h6 class="text-primary mb-3"><i class="fas fa-sliders-h me-2"></i>Parameter Controls</h6>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Coefficient a: <span class="badge bg-primary">{{ a }}</span></label>
+            <input type="range" class="form-range" v-model.number="a" min="-3" max="3" step="0.1">
+            <small class="text-muted">Controls parabola direction and width</small>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Coefficient b: <span class="badge bg-primary">{{ b }}</span></label>
+            <input type="range" class="form-range" v-model.number="b" min="-10" max="10" step="0.5">
+            <small class="text-muted">Shifts the parabola horizontally</small>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Coefficient c: <span class="badge bg-primary">{{ c }}</span></label>
+            <input type="range" class="form-range" v-model.number="c" min="-10" max="10" step="0.5">
+            <small class="text-muted">Y-intercept (where parabola crosses y-axis)</small>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -105,20 +106,20 @@
           <div v-if="showSolution" class="p-3 border rounded bg-light">
             <h6>Step-by-step solution:</h6>
             <div class="text-center mb-2">
-              <MathRenderer 
+              <MathJaxRenderer 
                 expression="x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}" 
                 :display-mode="true" 
               />
             </div>
             <p class="small mb-2">Substituting values:</p>
             <div class="text-center mb-2">
-              <MathRenderer 
+              <MathJaxRenderer 
                 :expression="`x = \\frac{-(${b}) \\pm \\sqrt{(${b})^2 - 4(${a})(${c})}}{2(${a})}`" 
                 :display-mode="true" 
               />
             </div>
             <div class="text-center">
-              <MathRenderer 
+              <MathJaxRenderer 
                 :expression="`x = \\frac{${-b} \\pm \\sqrt{${discriminant.toFixed(2)}}}{${2*a}}`" 
                 :display-mode="true" 
               />
@@ -132,7 +133,7 @@
 
 <script setup>
 import { ref, computed, onMounted, watch, nextTick } from 'vue'
-import MathRenderer from '@/components/common/MathRenderer.vue'
+import MathJaxRenderer from '@/components/common/MathJaxRenderer.vue'
 
 const a = ref(1)
 const b = ref(-5)

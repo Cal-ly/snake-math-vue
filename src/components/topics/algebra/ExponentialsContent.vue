@@ -11,7 +11,7 @@
         <strong>General Form:</strong> Perfect for modeling growth and decay
       </div>
       <div class="text-center mb-3">
-        <MathRenderer 
+        <MathJaxRenderer 
           expression="f(x) = a \\cdot b^x" 
           :display-mode="true" 
         />
@@ -20,117 +20,111 @@
     </div>
   </div>
 
-  <!-- Interactive Controls Card -->
+  <!-- Interactive Exponential Explorer (Standard Layout) -->
   <div class="card mb-4">
-    <div class="card-header">
-      <h3 class="h5 mb-0"><i class="fas fa-sliders-h me-2"></i>Interactive Controls</h3>
+    <div class="card-header bg-primary text-white">
+      <h3 class="h5 mb-0"><i class="fas fa-chart-area me-2"></i>Interactive Exponential Explorer</h3>
     </div>
     <div class="card-body">
-      <div class="row g-3 mb-4">
-        <div class="col-md-6">
-          <label class="form-label">Initial Value (a): <span class="badge bg-primary">{{ a }}</span></label>
-          <input type="range" class="form-range" v-model.number="a" min="0.1" max="10" step="0.1">
-          <small class="text-muted">Starting amount (y-intercept)</small>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Base (b): <span class="badge bg-primary">{{ b }}</span></label>
-          <input type="range" class="form-range" v-model.number="b" min="0.1" max="3" step="0.1">
-          <small class="text-muted">Growth factor (b > 1: growth, b < 1: decay)</small>
-        </div>
-      </div>
-      
-      <div class="current-equation text-center p-3 bg-light rounded mb-3">
-        <MathRenderer 
+      <!-- 1. Generated Equation -->
+      <div class="equation-section text-center p-3 bg-light rounded mb-4">
+        <h6 class="text-muted mb-2">Current Function:</h6>
+        <MathJaxRenderer 
           :expression="`f(x) = ${a} \\\\cdot ${b}^x`" 
           :display-mode="true" 
         />
+        
+        <div class="mt-3">
+          <div class="alert" :class="growthType.class" role="alert">
+            <strong>{{ growthType.label }}:</strong> {{ growthType.description }}
+          </div>
+        </div>
       </div>
       
-      <div class="alert" :class="growthType.class" role="alert">
-        <strong>{{ growthType.label }}:</strong> {{ growthType.description }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Visual Graph Card -->
-  <div class="card mb-4">
-    <div class="card-header">
-      <h3 class="h5 mb-0"><i class="fas fa-chart-area me-2"></i>Interactive Graph</h3>
-    </div>
-    <div class="card-body">
-      <div class="text-center">
-        <canvas ref="graphCanvas" width="600" height="400" class="rounded" style="max-width: 100%; height: auto; background-color: #f8f9fa; border: 1px solid #dee2e6;"></canvas>
-      </div>
-      <p class="text-muted text-center mt-2 small">Exponential function visualization with key points highlighted</p>
-    </div>
-  </div>
-
-  <!-- Programming Applications Card -->
-  <div class="card mb-4">
-    <div class="card-header">
-      <h3 class="h5 mb-0"><i class="fas fa-code me-2"></i>Programming Applications</h3>
-    </div>
-    <div class="card-body">
-      <div class="row g-3">
-        <div class="col-md-6">
-          <h6><i class="fas fa-server me-2"></i>Server Load</h6>
-          <p class="small">If each user invites 2 friends:</p>
-          <MathRenderer expression="users(day) = 1 \\cdot 2^{day}" />
+      <!-- 2. Graph Visualization -->
+      <div class="visualization-section mb-4">
+        <div class="text-center">
+          <canvas ref="graphCanvas" width="600" height="400" class="rounded" style="max-width: 100%; height: auto; background-color: #f8f9fa; border: 1px solid #dee2e6;"></canvas>
         </div>
-        <div class="col-md-6">
-          <h6><i class="fas fa-memory me-2"></i>Cache Decay</h6>
-          <p class="small">Memory cleanup over time:</p>
-          <MathRenderer expression="memory(t) = 100 \\cdot 0.9^t" />
+        <p class="text-muted text-center mt-2 small">Exponential function visualization with key points and asymptote</p>
+        
+        <!-- Programming Applications -->
+        <div class="mt-3 row g-3">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded">
+              <h6 class="small text-primary mb-2"><i class="fas fa-server me-2"></i>Server Load Example</h6>
+              <p class="small mb-1">If each user invites 2 friends:</p>
+              <MathJaxRenderer expression="users(day) = 1 \\cdot 2^{day}" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded">
+              <h6 class="small text-primary mb-2"><i class="fas fa-memory me-2"></i>Cache Decay Example</h6>
+              <p class="small mb-1">Memory cleanup over time:</p>
+              <MathJaxRenderer expression="memory(t) = 100 \\cdot 0.9^t" />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Function Analysis Card -->
-  <div class="card mb-4">
-    <div class="card-header">
-      <h3 class="h5 mb-0"><i class="fas fa-calculator me-2"></i>Function Values & Properties</h3>
-    </div>
-    <div class="card-body">
-      <div class="row g-4">
-        <div class="col-md-6">
-          <h6>Sample Values:</h6>
-          <div class="table-responsive">
-            <table class="table table-sm">
-              <thead>
-                <tr>
-                  <th>x</th>
-                  <th>f(x)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="x in sampleXValues" :key="x">
-                  <td>{{ x }}</td>
-                  <td>{{ calculateFunctionValue(x) }}</td>
-                </tr>
-              </tbody>
-            </table>
+      
+      <!-- 3. Controls -->
+      <div class="controls-section">
+        <h6 class="text-primary mb-3"><i class="fas fa-sliders-h me-2"></i>Function Parameters</h6>
+        
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <label class="form-label">Initial Value (a): <span class="badge bg-primary">{{ a }}</span></label>
+            <input type="range" class="form-range" v-model.number="a" min="0.1" max="10" step="0.1">
+            <small class="text-muted">Starting amount (y-intercept)</small>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Base (b): <span class="badge bg-primary">{{ b }}</span></label>
+            <input type="range" class="form-range" v-model.number="b" min="0.1" max="3" step="0.1">
+            <small class="text-muted">Growth factor (b > 1: growth, b < 1: decay)</small>
           </div>
         </div>
         
-        <div class="col-md-6">
-          <h6>Key Properties:</h6>
-          <ul class="mb-3">
-            <li><strong>Domain:</strong> All real numbers</li>
-            <li><strong>Range:</strong> (0, ∞)</li>
-            <li><strong>Y-intercept:</strong> {{ a }}</li>
-            <li><strong>Horizontal asymptote:</strong> y = 0</li>
-            <li><strong>Rate:</strong> {{ ((b - 1) * 100).toFixed(1) }}% per unit</li>
-          </ul>
-          
-          <h6>Logarithmic Inverse:</h6>
-          <div class="text-center p-2 bg-light rounded">
-            <MathRenderer 
-              :expression="`\\\\log_${b}(y) = x`" 
-              :display-mode="false" 
-            />
+        <!-- Function Analysis -->
+        <div class="row g-4">
+          <div class="col-md-6">
+            <h6 class="small text-primary mb-2">Sample Values:</h6>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>x</th>
+                    <th>f(x)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="x in sampleXValues" :key="x">
+                    <td>{{ x }}</td>
+                    <td>{{ calculateFunctionValue(x) }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <small class="text-muted">Useful for finding when f(x) = specific value</small>
+          
+          <div class="col-md-6">
+            <h6 class="small text-primary mb-2">Key Properties:</h6>
+            <ul class="small mb-3">
+              <li><strong>Domain:</strong> All real numbers</li>
+              <li><strong>Range:</strong> (0, ∞)</li>
+              <li><strong>Y-intercept:</strong> {{ a }}</li>
+              <li><strong>Horizontal asymptote:</strong> y = 0</li>
+              <li><strong>Rate:</strong> {{ ((b - 1) * 100).toFixed(1) }}% per unit</li>
+            </ul>
+            
+            <h6 class="small text-primary mb-2">Logarithmic Inverse:</h6>
+            <div class="text-center p-2 bg-light rounded">
+              <MathJaxRenderer 
+                :expression="`\\\\log_${b}(y) = x`" 
+                :display-mode="false" 
+              />
+            </div>
+            <small class="text-muted">Useful for finding when f(x) = specific value</small>
+          </div>
         </div>
       </div>
     </div>
@@ -139,7 +133,7 @@
 
 <script setup>
 import { ref, computed, onMounted, watch, nextTick } from 'vue'
-import MathRenderer from '@/components/common/MathRenderer.vue'
+import MathJaxRenderer from '@/components/common/MathJaxRenderer.vue'
 
 const a = ref(2)
 const b = ref(1.5)

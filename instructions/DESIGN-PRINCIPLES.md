@@ -16,7 +16,7 @@ This document defines the design principles, component patterns, and styling sta
 ### Typography
 - **Primary Font**: `Inter` - Clean, modern sans-serif
 - **Monospace Font**: `JetBrains Mono` - Code and mathematical expressions
-- **Math Rendering**: `KaTeX` - Mathematical notation
+- **Math Rendering**: `MathJax 3` - Comprehensive LaTeX mathematical notation
 - **Icon System**: `FontAwesome Free` - Consistent iconography
 
 ### Spacing System (Bootstrap-based)
@@ -57,12 +57,12 @@ const subtopicComponents = {
 **Every subtopic component must include:**
 
 1. **Introduction Card** with concept explanation and mathematical form
-2. **Interactive Controls Card** with Bootstrap form components for parameters
-3. **Visual Illustration Card** with canvas elements for graphs/diagrams
-4. **Analysis/Results Card** with real-time calculations and step-by-step solutions
-5. **Vertical stacked layout** for natural content progression
+2. **Interactive Explorer Card** with standardized internal layout following SYSTEM-MEMORY.md:
+   - **Generated Equation Section** - Current function with real-time updates
+   - **Graph Visualization Section** - Canvas elements for mathematical illustrations
+   - **Controls Section** - Parameters, analysis, and step-by-step solutions
 
-**Template Pattern (Vertical Stacked Layout):**
+**Template Pattern (Standard Layout):**
 ```vue
 <template>
   <!-- Introduction Card -->
@@ -537,7 +537,7 @@ $light: #f9fafb;      // Light theme background
 **For each new subtopic component:**
 
 - [ ] Follow modular file structure pattern
-- [ ] Use vertical stacked card layout with 1400px max width
+- [ ] Use standard layout pattern (Introduction Card + Interactive Explorer Card) with 1400px max width
 - [ ] Include FontAwesome icons consistently in card headers
 - [ ] Add interactive controls with proper labeling and real-time updates
 - [ ] Implement canvas visualization with mathematical graphs/diagrams

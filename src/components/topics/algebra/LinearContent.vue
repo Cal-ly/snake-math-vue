@@ -11,7 +11,7 @@
         <strong>Slope-Intercept Form:</strong> The most programmer-friendly format
       </div>
       <div class="text-center mb-3">
-        <MathRenderer 
+        <MathJaxRenderer 
           expression="y = mx + b" 
           :display-mode="true" 
         />
@@ -20,140 +20,123 @@
     </div>
   </div>
 
-  <!-- Method Selection Card -->
+  <!-- Interactive Linear Explorer (Standard Layout) -->
   <div class="card mb-4">
-    <div class="card-header">
-      <h3 class="h5 mb-0"><i class="fas fa-cogs me-2"></i>Method Selection</h3>
+    <div class="card-header bg-primary text-white">
+      <h3 class="h5 mb-0"><i class="fas fa-ruler me-2"></i>Interactive Linear Explorer</h3>
     </div>
     <div class="card-body">
-      <div class="btn-group w-100 mb-4" role="group">
-        <input type="radio" class="btn-check" :value="false" v-model="usePoints" id="slope-intercept">
-        <label class="btn btn-outline-primary" for="slope-intercept">
-          <i class="fas fa-chart-line me-2"></i>Slope & Y-Intercept
-        </label>
-        
-        <input type="radio" class="btn-check" :value="true" v-model="usePoints" id="two-points">
-        <label class="btn btn-outline-primary" for="two-points">
-          <i class="fas fa-map-pin me-2"></i>Two Points
-        </label>
-      </div>
-      
-      <div v-if="!usePoints" class="row g-3">
-        <div class="col-md-6">
-          <label class="form-label">Slope (m): <span class="badge bg-primary">{{ slope }}</span></label>
-          <input type="range" class="form-range" v-model.number="slope" min="-5" max="5" step="0.1">
-          <small class="text-muted">Rise over run - how steep the line is</small>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Y-Intercept (b): <span class="badge bg-primary">{{ yIntercept }}</span></label>
-          <input type="range" class="form-range" v-model.number="yIntercept" min="-10" max="10" step="0.5">
-          <small class="text-muted">Where line crosses the y-axis</small>
-        </div>
-      </div>
-      
-      <div v-else class="row g-3">
-        <div class="col-md-6">
-          <h6>Point 1</h6>
-          <div class="row">
-            <div class="col-6">
-              <label class="form-label">X1: <span class="badge bg-secondary">{{ point1X }}</span></label>
-              <input type="range" class="form-range" v-model.number="point1X" min="-10" max="10" step="0.5">
-            </div>
-            <div class="col-6">
-              <label class="form-label">Y1: <span class="badge bg-secondary">{{ point1Y }}</span></label>
-              <input type="range" class="form-range" v-model.number="point1Y" min="-10" max="10" step="0.5">
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <h6>Point 2</h6>
-          <div class="row">
-            <div class="col-6">
-              <label class="form-label">X2: <span class="badge bg-secondary">{{ point2X }}</span></label>
-              <input type="range" class="form-range" v-model.number="point2X" min="-10" max="10" step="0.5">
-            </div>
-            <div class="col-6">
-              <label class="form-label">Y2: <span class="badge bg-secondary">{{ point2Y }}</span></label>
-              <input type="range" class="form-range" v-model.number="point2Y" min="-10" max="10" step="0.5">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Current Equation Card -->
-  <div class="card mb-4">
-    <div class="card-header">
-      <h3 class="h5 mb-0"><i class="fas fa-function me-2"></i>Generated Equation</h3>
-    </div>
-    <div class="card-body">
-      <div class="text-center p-3 bg-light rounded mb-3">
-        <MathRenderer 
+      <!-- 1. Generated Equation -->
+      <div class="equation-section text-center p-3 bg-light rounded mb-4">
+        <h6 class="text-muted mb-2">Current Function:</h6>
+        <MathJaxRenderer 
           :expression="slopeInterceptForm" 
           :display-mode="true" 
         />
+        
+        <div v-if="usePoints" class="mt-3 text-start">
+          <h6 class="small text-primary">Step-by-step calculation:</h6>
+          <div class="small mb-1">
+            <strong>1. Calculate slope:</strong>
+            <MathJaxRenderer 
+              :expression="`m = \\frac{${point2Y} - ${point1Y}}{${point2X} - ${point1X}} = ${calculatedSlope}`" 
+              :display-mode="false" 
+            />
+          </div>
+          <div class="small">
+            <strong>2. Point-slope form:</strong>
+            <MathJaxRenderer 
+              :expression="pointSlopeForm" 
+              :display-mode="false" 
+            />
+          </div>
+        </div>
       </div>
       
-      <div v-if="usePoints" class="mb-3">
-        <h6>Step-by-step calculation:</h6>
-        <div class="small mb-2">
-          <strong>1. Calculate slope:</strong>
-          <MathRenderer 
-            expression="m = \\frac{y_2 - y_1}{x_2 - x_1}" 
-            :display-mode="false" 
-          />
+      <!-- 2. Graph Visualization -->
+      <div class="visualization-section mb-4">
+        <div class="text-center">
+          <canvas ref="graphCanvas" width="600" height="400" class="rounded" style="max-width: 100%; height: auto; background-color: #f8f9fa; border: 1px solid #dee2e6;"></canvas>
         </div>
-        <div class="small mb-2">
-          <MathRenderer 
-            :expression="`m = \\frac{${point2Y} - ${point1Y}}{${point2X} - ${point1X}} = ${calculatedSlope}`" 
-            :display-mode="false" 
-          />
+        <p class="text-muted text-center mt-2 small">Linear equation visualization with key points highlighted</p>
+      </div>
+      
+      <!-- 3. Controls -->
+      <div class="controls-section">
+        <h6 class="text-primary mb-3"><i class="fas fa-cogs me-2"></i>Method Selection & Controls</h6>
+        
+        <!-- Method Toggle -->
+        <div class="btn-group w-100 mb-4" role="group">
+          <input type="radio" class="btn-check" :value="false" v-model="usePoints" id="slope-intercept">
+          <label class="btn btn-outline-primary" for="slope-intercept">
+            <i class="fas fa-chart-line me-2"></i>Slope & Y-Intercept
+          </label>
+          
+          <input type="radio" class="btn-check" :value="true" v-model="usePoints" id="two-points">
+          <label class="btn btn-outline-primary" for="two-points">
+            <i class="fas fa-map-pin me-2"></i>Two Points
+          </label>
         </div>
         
-        <div class="small mb-2">
-          <strong>2. Use point-slope form:</strong>
-          <MathRenderer 
-            :expression="pointSlopeForm" 
-            :display-mode="false" 
-          />
+        <!-- Parameter Controls -->
+        <div v-if="!usePoints" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Slope (m): <span class="badge bg-primary">{{ slope }}</span></label>
+            <input type="range" class="form-range" v-model.number="slope" min="-5" max="5" step="0.1">
+            <small class="text-muted">Rise over run - how steep the line is</small>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Y-Intercept (b): <span class="badge bg-primary">{{ yIntercept }}</span></label>
+            <input type="range" class="form-range" v-model.number="yIntercept" min="-10" max="10" step="0.5">
+            <small class="text-muted">Where line crosses the y-axis</small>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Visual Graph Card -->
-  <div class="card mb-4">
-    <div class="card-header">
-      <h3 class="h5 mb-0"><i class="fas fa-chart-line me-2"></i>Interactive Graph</h3>
-    </div>
-    <div class="card-body">
-      <div class="text-center">
-        <canvas ref="graphCanvas" width="600" height="400" class="rounded" style="max-width: 100%; height: auto; background-color: #f8f9fa; border: 1px solid #dee2e6;"></canvas>
-      </div>
-      <p class="text-muted text-center mt-2 small">Linear equation visualization with points highlighted</p>
-    </div>
-  </div>
-
-  <!-- Properties and Analysis Card -->
-  <div class="card mb-4">
-    <div class="card-header">
-      <h3 class="h5 mb-0"><i class="fas fa-list me-2"></i>Key Properties</h3>
-    </div>
-    <div class="card-body">
-      <div class="row g-3">
-        <div class="col-md-6">
-          <ul class="mb-0">
-            <li><strong>Slope:</strong> {{ usePoints ? calculatedSlope : slope }} (rate of change)</li>
-            <li><strong>Y-intercept:</strong> {{ usePoints ? calculatedYIntercept : yIntercept }}</li>
-            <li><strong>Domain:</strong> All real numbers</li>
-            <li><strong>Range:</strong> All real numbers</li>
-          </ul>
+        
+        <div v-else class="row g-3">
+          <div class="col-md-6">
+            <h6 class="small">Point 1</h6>
+            <div class="row">
+              <div class="col-6">
+                <label class="form-label">X1: <span class="badge bg-secondary">{{ point1X }}</span></label>
+                <input type="range" class="form-range" v-model.number="point1X" min="-10" max="10" step="0.5">
+              </div>
+              <div class="col-6">
+                <label class="form-label">Y1: <span class="badge bg-secondary">{{ point1Y }}</span></label>
+                <input type="range" class="form-range" v-model.number="point1Y" min="-10" max="10" step="0.5">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h6 class="small">Point 2</h6>
+            <div class="row">
+              <div class="col-6">
+                <label class="form-label">X2: <span class="badge bg-secondary">{{ point2X }}</span></label>
+                <input type="range" class="form-range" v-model.number="point2X" min="-10" max="10" step="0.5">
+              </div>
+              <div class="col-6">
+                <label class="form-label">Y2: <span class="badge bg-secondary">{{ point2Y }}</span></label>
+                <input type="range" class="form-range" v-model.number="point2Y" min="-10" max="10" step="0.5">
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-6">
-          <div class="p-3 bg-light rounded">
-            <h6 class="mb-2">Programming Analogy:</h6>
-            <code class="small">function f(x) { return {{ usePoints ? calculatedSlope : slope }} * x + {{ usePoints ? calculatedYIntercept : yIntercept }}; }</code>
+        
+        <!-- Properties Summary -->
+        <div class="mt-4 p-3 bg-light rounded">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <h6 class="small mb-2 text-primary">Key Properties:</h6>
+              <ul class="small mb-0">
+                <li><strong>Slope:</strong> {{ usePoints ? calculatedSlope : slope }} (rate of change)</li>
+                <li><strong>Y-intercept:</strong> {{ usePoints ? calculatedYIntercept : yIntercept }}</li>
+                <li><strong>Domain:</strong> All real numbers</li>
+                <li><strong>Range:</strong> All real numbers</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6 class="small mb-2 text-primary">Programming Analogy:</h6>
+              <code class="small">function f(x) { return {{ usePoints ? calculatedSlope : slope }} * x + {{ usePoints ? calculatedYIntercept : yIntercept }}; }</code>
+            </div>
           </div>
         </div>
       </div>
@@ -163,7 +146,7 @@
 
 <script setup>
 import { ref, computed, onMounted, watch, nextTick } from 'vue'
-import MathRenderer from '@/components/common/MathRenderer.vue'
+import MathJaxRenderer from '@/components/common/MathJaxRenderer.vue'
 
 const slope = ref(2)
 const yIntercept = ref(-1)
