@@ -24,7 +24,7 @@
     </header>
     
     <div class="app-content">
-      <main class="main-content container-fluid py-4">
+      <main class="main-content container-fluid py-4" style="max-width: 1400px; margin: 0 auto;">
         <component 
           :is="currentTopicComponent" 
           :key="activeTopic"

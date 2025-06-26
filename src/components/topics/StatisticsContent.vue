@@ -1,15 +1,26 @@
 <template>
-  <div class="statistics-content">
-    <header class="topic-header">
-      <h1>📊 Statistics</h1>
-      <p class="topic-description">
+  <div class="container-fluid py-4">
+    <header class="text-center mb-5">
+      <h1 class="display-4 text-primary mb-3">
+        <i class="fas fa-chart-bar me-3"></i>Statistics
+      </h1>
+      <p class="lead text-muted">
         Analyze data and understand probability distributions
       </p>
     </header>
     
-    <div class="content-placeholder">
-      <p>📊 Statistics content coming soon...</p>
-      <p>This section will cover data analysis, probability, and statistical methods.</p>
+    <div class="row justify-content-center">
+      <div class="col-12" style="max-width: 1400px; margin: auto;">
+        <div class="card">
+          <div class="card-body text-center py-5">
+            <div class="mb-4">
+              <i class="fas fa-chart-bar text-primary" style="font-size: 3rem;"></i>
+            </div>
+            <h3 class="h4 mb-3">Statistics content coming soon...</h3>
+            <p class="text-muted">This section will cover data analysis, probability, and statistical methods.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -19,38 +30,10 @@
 </script>
 
 <style scoped>
-.statistics-content {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.topic-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.topic-header h1 {
-  color: var(--primary-color);
-  margin-bottom: 1rem;
-  font-size: 2.5rem;
-}
-
-.topic-description {
-  font-size: 1.2rem;
-  color: #6b7280;
-}
-
-.content-placeholder {
-  background: white;
-  border-radius: 12px;
-  padding: 3rem;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.content-placeholder p {
-  font-size: 1.1rem;
-  color: #6b7280;
-  margin-bottom: 1rem;
+/* Bootstrap-based styling with minimal custom overrides */
+@media (max-width: 767px) {
+  .display-4 {
+    font-size: 2rem;
+  }
 }
 </style>

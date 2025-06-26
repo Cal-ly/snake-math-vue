@@ -56,50 +56,260 @@ const subtopicComponents = {
 
 **Every subtopic component must include:**
 
-1. **Header Section** with FontAwesome icon and title
-2. **Interactive Controls Section** with Bootstrap form components
-3. **Live Analysis/Results Section** with real-time calculations
-4. **Educational Content** with programming analogies
-5. **Mobile-responsive layout** with sticky sidebars on desktop
+1. **Introduction Card** with concept explanation and mathematical form
+2. **Interactive Controls Card** with Bootstrap form components for parameters
+3. **Visual Illustration Card** with canvas elements for graphs/diagrams
+4. **Analysis/Results Card** with real-time calculations and step-by-step solutions
+5. **Vertical stacked layout** for natural content progression
 
-**Template Pattern:**
+**Template Pattern (Vertical Stacked Layout):**
 ```vue
 <template>
-  <div class="row">
-    <!-- Main Content (col-lg-8) -->
-    <div class="col-lg-8">
-      <div class="card mb-4">
-        <div class="card-header bg-primary text-white">
-          <h2 class="h4 mb-0">
-            <i class="fas fa-[icon] me-2"></i>[Topic Title]
-          </h2>
-        </div>
-        <div class="card-body">
-          <!-- Educational content with programming analogies -->
-        </div>
-      </div>
-      
-      <div class="card mb-4">
-        <div class="card-header">
-          <h3 class="h5 mb-0">
-            <i class="fas fa-sliders-h me-2"></i>Interactive Controls
-          </h3>
-        </div>
-        <div class="card-body">
-          <!-- Interactive form controls -->
-        </div>
-      </div>
+  <!-- Introduction Card -->
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h2 class="h4 mb-0">
+        <i class="fas fa-[icon] me-2"></i>[Subtopic Title]
+      </h2>
     </div>
-    
-    <!-- Sidebar (col-lg-4) -->
-    <div class="col-lg-4">
-      <div class="card sticky-top" style="top: 2rem;">
-        <!-- Live analysis and results -->
+    <div class="card-body">
+      <p class="lead">[Concept explanation with programming analogies]</p>
+      <div class="alert alert-info" role="alert">
+        <strong>[Key Concept]:</strong> [Brief description]
       </div>
+      <div class="text-center mb-3">
+        <MathRenderer 
+          expression="[mathematical formula]" 
+          :display-mode="true" 
+        />
+      </div>
+      <p>[Parameter explanations]</p>
+    </div>
+  </div>
+
+  <!-- Interactive Controls Card -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h3 class="h5 mb-0">
+        <i class="fas fa-sliders-h me-2"></i>Interactive Controls
+      </h3>
+    </div>
+    <div class="card-body">
+      <!-- Form controls for parameters -->
+      <!-- Current equation display -->
+    </div>
+  </div>
+
+  <!-- Visual Illustration Card -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h3 class="h5 mb-0">
+        <i class="fas fa-chart-area me-2"></i>Interactive Visualization
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="text-center">
+        <canvas 
+          ref="graphCanvas" 
+          width="600" 
+          height="400" 
+          class="rounded" 
+          style="max-width: 100%; height: auto; background-color: #f8f9fa; border: 1px solid #dee2e6;"
+        ></canvas>
+      </div>
+      <p class="text-muted text-center mt-2 small">[Canvas description]</p>
+    </div>
+  </div>
+
+  <!-- Analysis & Results Card -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h3 class="h5 mb-0">
+        <i class="fas fa-calculator me-2"></i>Mathematical Analysis
+      </h3>
+    </div>
+    <div class="card-body">
+      <!-- Properties, calculations, step-by-step solutions -->
     </div>
   </div>
 </template>
 ```
+
+### Topic Selection Card Layout
+**For main topic components with subtopic selection (compact 50% size):**
+```vue
+<template>
+  <div class="container-fluid py-4">
+    <header class="text-center mb-5">
+      <h1 class="display-4 text-primary mb-3">
+        <i class="fas fa-[icon] me-3"></i>[Topic Title]
+      </h1>
+      <p class="lead text-muted">
+        [Topic Description]
+      </p>
+    </header>
+    
+    <!-- Subtopic cards in 4-column grid -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-12" style="max-width: 1400px; margin: auto;">
+        <div class="row g-3">
+          <div 
+            v-for="subtopic in subtopics" 
+            :key="subtopic.id"
+            class="col-lg-3 col-md-6 col-sm-6 col-12"
+          >
+            <div class="card h-100 subtopic-card">
+              <div class="card-body text-center py-2">
+                <div class="mb-1">
+                  <i :class="subtopic.icon" class="text-primary" style="font-size: 1rem;"></i>
+                </div>
+                <h6 class="card-title mb-1" style="font-size: 0.875rem;">{{ subtopic.title }}</h6>
+                <p class="card-text text-muted" style="font-size: 0.75rem;">{{ subtopic.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Selected subtopic content -->
+    <div class="content-section" style="max-width: 1400px; margin: auto;">
+      <component :is="currentSubtopicComponent" />
+    </div>
+  </div>
+</template>
+```
+
+### Canvas Visualization Standards
+
+**Canvas Implementation Pattern:**
+```vue
+<script setup>
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
+
+const graphCanvas = ref(null)
+const parameter1 = ref(1)
+const parameter2 = ref(2)
+
+const drawGraph = () => {
+  if (!graphCanvas.value) return
+  
+  const canvas = graphCanvas.value
+  const ctx = canvas.getContext('2d')
+  const width = canvas.width
+  const height = canvas.height
+  
+  // Clear canvas with light grey background (theme-agnostic)
+  ctx.fillStyle = '#f8f9fa'
+  ctx.fillRect(0, 0, width, height)
+  
+  // Set up coordinate system
+  const xMin = -10, xMax = 10
+  const yMin = -10, yMax = 10
+  const xScale = width / (xMax - xMin)
+  const yScale = height / (yMax - yMin)
+  
+  // Helper functions
+  const toCanvasX = (x) => (x - xMin) * xScale
+  const toCanvasY = (y) => height - (y - yMin) * yScale
+  
+  // Draw grid, axes, and mathematical function
+  // ... implementation details
+}
+
+onMounted(() => {
+  nextTick(() => {
+    drawGraph()
+  })
+})
+
+// Watch for parameter changes and redraw
+watch([parameter1, parameter2], () => {
+  nextTick(() => {
+    drawGraph()
+  })
+})
+</script>
+
+<style scoped>
+/* Canvas responsiveness */
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 767px) {
+  canvas {
+    width: 100%;
+    height: 300px;
+  }
+}
+</style>
+```
+
+**Canvas Features to Include:**
+- **Theme-Agnostic Background**: Always use light grey (`#f8f9fa`) background, regardless of theme
+- **Grid System**: Medium grey (`#dee2e6`) grid lines for reference
+- **Coordinate Axes**: Dark grey (`#495057`) for x and y axes (theme-independent)
+- **Function Plotting**: Primary color (#10b981) for main functions
+- **Key Points**: Highlighted vertices, intercepts, or special points
+- **Interactive Updates**: Real-time redraw when parameters change
+- **Responsive Design**: Proper scaling on mobile devices
+- **Legend**: Theme-agnostic text (`#495057`) with color-coded elements
+- **Special Features**: Asymptotes (dashed lines), special mathematical properties
+
+**Canvas Styling Requirements:**
+```vue
+<canvas 
+  ref="graphCanvas" 
+  width="600" 
+  height="400" 
+  class="rounded" 
+  style="max-width: 100%; height: auto; background-color: #f8f9fa; border: 1px solid #dee2e6;"
+></canvas>
+```
+
+**Canvas Color Palette (Theme-Agnostic):**
+- **Background**: `#f8f9fa` (Bootstrap gray-100)
+- **Grid Lines**: `#dee2e6` (Bootstrap gray-300)
+- **Axes**: `#495057` (Bootstrap gray-600)
+- **Text/Legend**: `#495057` (Bootstrap gray-600)
+- **Primary Function**: `#10b981` (Snake Math green)
+- **Accent Points**: `#dc2626` (red), `#2563eb` (blue)
+- **Asymptotes/Special Lines**: `#6b7280` (Bootstrap gray-500) with dashed pattern
+
+### Function-Specific Canvas Patterns
+
+**Exponential Functions (`f(x) = a·b^x`):**
+```javascript
+// Coordinate system for exponentials
+const xMin = -3, xMax = 5
+const yMin = -2, yMax = 20
+
+// Special features to implement:
+// 1. Horizontal asymptote at y = 0 (dashed line)
+ctx.strokeStyle = '#6b7280'
+ctx.setLineDash([5, 5])
+ctx.beginPath()
+ctx.moveTo(0, toCanvasY(0))
+ctx.lineTo(width, toCanvasY(0))
+ctx.stroke()
+ctx.setLineDash([]) // Reset
+
+// 2. Y-intercept highlighting (when x = 0, y = a)
+// 3. Key integer points for visual reference
+// 4. Smooth curve plotting with appropriate step size (0.1)
+```
+
+**Quadratic Functions (`f(x) = ax² + bx + c`):**
+- Highlight vertex point (maximum/minimum)
+- Mark x-intercepts (solutions) when they exist
+- Show discriminant-based visual feedback
+
+**Linear Functions (`y = mx + b`):**
+- Highlight y-intercept and slope visualization
+- Support two-point method with interactive point selection
+- Show step-by-step slope calculation
 
 ## 🎛️ Interactive Component Standards
 
@@ -163,6 +373,7 @@ const subtopicComponents = {
 
 ### Breakpoint Strategy
 - **Mobile-first**: Design for small screens, enhance for larger
+- **Max Width**: 1400px for all content areas on widescreen displays
 - **Breakpoints**: Follow Bootstrap's standard breakpoints
   - `xs`: < 576px (default)
   - `sm`: ≥ 576px
@@ -172,9 +383,10 @@ const subtopicComponents = {
   - `xxl`: ≥ 1400px
 
 ### Layout Patterns
-- **Desktop**: Two-column layout (main content + sticky sidebar)
+- **Desktop**: Two-column layout (main content + sticky sidebar) within 1400px container
 - **Tablet**: Single column with sidebar below main content
 - **Mobile**: Full-width single column, remove sticky positioning
+- **Topic Cards**: 4-column grid on desktop (lg+), 2-column on tablet (md+), single column on mobile
 
 **Required Responsive CSS:**
 ```scss
@@ -295,8 +507,8 @@ $light: #f9fafb;      // Light theme background
 - **Error handling**: Graceful handling of invalid inputs
 
 ### Build Targets
-- **CSS Bundle**: Keep under 400KB (currently ~375KB)
-- **JS Bundle**: Keep under 400KB (currently ~362KB)
+- **CSS Bundle**: Keep under 400KB (currently ~373KB)
+- **JS Bundle**: Keep under 400KB (currently ~365KB)
 - **Load Time**: First contentful paint under 2 seconds
 - **Interactive**: Time to interactive under 3 seconds
 
@@ -325,15 +537,16 @@ $light: #f9fafb;      // Light theme background
 **For each new subtopic component:**
 
 - [ ] Follow modular file structure pattern
-- [ ] Use Bootstrap card-based layout
-- [ ] Include FontAwesome icons consistently
-- [ ] Add interactive controls with proper labeling
-- [ ] Implement real-time mathematical calculations
-- [ ] Include programming analogies in content
-- [ ] Add responsive design with mobile considerations
-- [ ] Ensure accessibility standards compliance
+- [ ] Use vertical stacked card layout with 1400px max width
+- [ ] Include FontAwesome icons consistently in card headers
+- [ ] Add interactive controls with proper labeling and real-time updates
+- [ ] Implement canvas visualization with mathematical graphs/diagrams
+- [ ] Include programming analogies in introduction content
+- [ ] Add responsive design with mobile considerations (canvas scaling)
+- [ ] Ensure accessibility standards compliance (ARIA labels, keyboard navigation)
 - [ ] Test across light/dark themes
-- [ ] Verify performance impact on build
+- [ ] Verify canvas performance and smooth parameter updates
+- [ ] Verify overall performance impact on build
 
 **Quality Assurance:**
 - [ ] Mathematical accuracy verified

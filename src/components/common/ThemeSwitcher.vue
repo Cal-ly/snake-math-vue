@@ -6,9 +6,7 @@
       class="btn btn-outline-secondary d-flex align-items-center"
       :class="{ 'active': isDark }"
     >
-      <span class="theme-icon me-2" :class="themeIconClass">
-        {{ themeIcon }}
-      </span>
+      <i class="me-2" :class="themeIconClass"></i>
       <span class="theme-text d-none d-sm-inline">{{ themeText }}</span>
     </button>
   </div>
@@ -21,14 +19,14 @@ import { ref, computed, onMounted, watch } from 'vue'
 const isDark = ref(false)
 
 // Computed properties for UI
-const themeIcon = computed(() => isDark.value ? '🌙' : '🌞')
+// Removed themeIcon - now using FontAwesome classes directly
 const themeText = computed(() => isDark.value ? 'Dark' : 'Light')
 const themeLabel = computed(() => 
   `Switch to ${isDark.value ? 'light' : 'dark'} theme`
 )
 const themeIconClass = computed(() => ({
-  'theme-icon--sun': !isDark.value,
-  'theme-icon--moon': isDark.value
+  'fas fa-sun theme-icon theme-icon--sun': !isDark.value,
+  'fas fa-moon theme-icon theme-icon--moon': isDark.value
 }))
 
 // Theme persistence key

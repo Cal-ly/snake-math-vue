@@ -106,7 +106,8 @@ npm run preview
 - **Design System**: Integrated Bootstrap 5.3.7 with custom Snake Math theme
 - **Icons**: Added FontAwesome with topic-specific icons (calculator, chart-bar, etc.)
 - **Theme System**: Bootstrap data-bs-theme for proper light/dark mode
-- **Layout**: Full-width content layout optimized for all screen sizes
+- **Layout**: Responsive layout with 1400px max width for widescreen users
+- **Topic Cards**: Compact 4-column grid layout on desktop, responsive stacking on mobile
 - **Dependencies**: Added vite-plugin-pwa, workbox-window, bootstrap, @fortawesome/fontawesome-free
 
 ## Development Guidelines

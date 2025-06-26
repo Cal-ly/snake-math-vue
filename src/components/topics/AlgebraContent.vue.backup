@@ -10,12 +10,12 @@
     </header>
     
     <div class="row justify-content-center mb-5">
-      <div class="col-12" style="max-width: 1400px; margin: auto;">
-        <div class="row g-3">
+      <div class="col-12" style="max-width: 1000px;">
+        <div class="d-flex flex-column gap-3">
           <div 
             v-for="subtopic in subtopics" 
             :key="subtopic.id"
-            class="col-lg-3 col-md-6 col-sm-6 col-12"
+            class="w-100"
           >
             <div 
               class="card h-100 subtopic-card"
@@ -25,20 +25,19 @@
               tabindex="0"
               @keyup.enter="selectSubtopic(subtopic.id)"
             >
-              <div class="card-body text-center py-2">
-                <div class="mb-1">
-                  <i :class="subtopic.icon" class="text-primary" style="font-size: 1rem;"></i>
+              <div class="card-body text-center">
+                <div class="mb-3">
+                  <i :class="subtopic.icon" class="text-primary" style="font-size: 2.5rem;"></i>
                 </div>
-                <h6 class="card-title mb-1" style="font-size: 0.875rem;">{{ subtopic.title }}</h6>
-                <p class="card-text text-muted" style="font-size: 0.75rem;">{{ subtopic.description }}</p>
+                <h5 class="card-title">{{ subtopic.title }}</h5>
+                <p class="card-text text-muted">{{ subtopic.description }}</p>
               </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
     
-    <div class="content-section" style="max-width: 1400px; margin: auto;">
+    <div class="content-section">
       <component 
         :is="currentSubtopicComponent" 
         v-if="activeSubtopic"
@@ -90,6 +89,8 @@ const subtopics = [
     icon: 'fas fa-sigma'
   }
 ]
+
+// Import modular content components
 
 const subtopicComponents = {
   quadratics: QuadraticsContent,
