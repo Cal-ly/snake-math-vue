@@ -42,6 +42,17 @@ export default defineConfig({
       }
     })
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Suppress deprecation warnings from Bootstrap
+        quietDeps: true,
+        api: 'modern-compiler',
+        // Fallback to legacy API if modern-compiler fails
+        silenceDeprecations: ['legacy-js-api', 'import', 'global-builtin', 'color-functions']
+      }
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

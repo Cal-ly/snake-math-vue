@@ -1,0 +1,342 @@
+// Bootstrap Custom Configuration using Modern Sass Module System
+// This file eliminates SCSS deprecation warnings by using the new @use syntax
+
+// Import Sass modules
+@use 'sass:color';
+@use 'sass:math';
+
+// Color System Override
+// Primary color matches our snake theme
+$primary: #10b981; // Green-500 (emerald)
+$secondary: #6b7280; // Gray-500
+$success: #22c55e; // Green-500
+$info: #3b82f6; // Blue-500
+$warning: #f59e0b; // Amber-500
+$danger: #ef4444; // Red-500
+$light: #f9fafb; // Gray-50
+$dark: #111827; // Gray-900
+
+// Typography
+$font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-family-monospace: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, monospace;
+
+$font-size-base: 1rem;
+$line-height-base: 1.6;
+
+$h1-font-size: 2.5rem;
+$h2-font-size: 2rem;
+$h3-font-size: 1.5rem;
+$h4-font-size: 1.25rem;
+$h5-font-size: 1.125rem;
+$h6-font-size: 1rem;
+
+// Spacing
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25, // 4px
+  2: $spacer * 0.5,  // 8px
+  3: $spacer * 1,    // 16px
+  4: $spacer * 1.5,  // 24px
+  5: $spacer * 2,    // 32px
+  6: $spacer * 3,    // 48px
+  7: $spacer * 4,    // 64px
+);
+
+// Border radius
+$border-radius: 0.5rem;
+$border-radius-sm: 0.25rem;
+$border-radius-lg: 0.75rem;
+$border-radius-xl: 1rem;
+
+// Shadows
+$box-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+$box-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+// Component specific customizations
+$navbar-padding-y: 1rem;
+$navbar-padding-x: 1.5rem;
+
+$btn-padding-y: 0.5rem;
+$btn-padding-x: 1rem;
+$btn-border-radius: $border-radius;
+
+$card-border-radius: $border-radius-lg;
+$card-border-width: 1px;
+$card-border-color: rgba(0, 0, 0, 0.125);
+
+// Import Bootstrap with modern module system
+@use 'bootstrap/scss/bootstrap' with (
+  $primary: $primary,
+  $secondary: $secondary,
+  $success: $success,
+  $info: $info,
+  $warning: $warning,
+  $danger: $danger,
+  $light: $light,
+  $dark: $dark,
+  $font-family-sans-serif: $font-family-sans-serif,
+  $font-family-monospace: $font-family-monospace,
+  $font-size-base: $font-size-base,
+  $line-height-base: $line-height-base,
+  $h1-font-size: $h1-font-size,
+  $h2-font-size: $h2-font-size,
+  $h3-font-size: $h3-font-size,
+  $h4-font-size: $h4-font-size,
+  $h5-font-size: $h5-font-size,
+  $h6-font-size: $h6-font-size,
+  $spacer: $spacer,
+  $spacers: $spacers,
+  $border-radius: $border-radius,
+  $border-radius-sm: $border-radius-sm,
+  $border-radius-lg: $border-radius-lg,
+  $box-shadow-sm: $box-shadow-sm,
+  $box-shadow: $box-shadow,
+  $box-shadow-lg: $box-shadow-lg,
+  $navbar-padding-y: $navbar-padding-y,
+  $navbar-padding-x: $navbar-padding-x,
+  $btn-padding-y: $btn-padding-y,
+  $btn-padding-x: $btn-padding-x,
+  $btn-border-radius: $btn-border-radius,
+  $card-border-radius: $card-border-radius,
+  $card-border-width: $card-border-width,
+  $card-border-color: $card-border-color
+);
+
+// Custom utility classes
+.text-snake {
+  color: $primary !important;
+}
+
+.bg-snake {
+  background-color: $primary !important;
+}
+
+.border-snake {
+  border-color: $primary !important;
+}
+
+// Mathematical content specific styles
+.math-content {
+  .katex {
+    font-size: 1.1em;
+  }
+  
+  .katex-display {
+    margin: 1.5em 0;
+    text-align: center;
+  }
+}
+
+// Canvas and visualization styles
+.canvas-container {
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  background-color: var(--bs-light-bg);
+  padding: 1rem;
+  box-shadow: var(--bs-box-shadow-sm);
+  
+  canvas {
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+// Interactive controls
+.math-controls {
+  background-color: var(--bs-card-bg);
+  border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+  border-radius: var(--bs-card-border-radius);
+  padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+  margin-bottom: 1.5rem;
+  
+  .control-group {
+    margin-bottom: 1rem;
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    input[type="range"] {
+      width: 100%;
+      height: 1.5rem;
+      padding: 0;
+      background-color: transparent;
+      border: none;
+      appearance: none;
+      
+      &::-webkit-slider-track {
+        height: 0.5rem;
+        background: var(--bs-secondary-bg);
+        border-radius: 0.25rem;
+      }
+      
+      &::-webkit-slider-thumb {
+        appearance: none;
+        height: 1.25rem;
+        width: 1.25rem;
+        background: $primary;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-top: -0.375rem;
+      }
+      
+      &::-moz-range-track {
+        height: 0.5rem;
+        background: var(--bs-secondary-bg);
+        border-radius: 0.25rem;
+        border: none;
+      }
+      
+      &::-moz-range-thumb {
+        height: 1.25rem;
+        width: 1.25rem;
+        background: $primary;
+        border-radius: 50%;
+        cursor: pointer;
+        border: none;
+      }
+    }
+    
+    .control-value {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background-color: var(--bs-light-bg);
+      color: var(--bs-dark);
+      border-radius: 0.25rem;
+      font-family: $font-family-monospace;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+// Topic navigation customizations
+.topic-nav-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: transparent;
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  color: var(--bs-body-color);
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  
+  &:hover {
+    background-color: var(--bs-secondary-bg);
+    border-color: var(--bs-secondary-border);
+    color: var(--bs-body-color);
+  }
+  
+  &.active {
+    background-color: $primary;
+    border-color: $primary;
+    color: white;
+  }
+  
+  i {
+    margin-right: 0.5rem;
+  }
+}
+
+// Header customizations
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  box-shadow: var(--bs-box-shadow-sm);
+}
+
+// Responsive utilities for mathematical content
+@media (max-width: 767.98px) {
+  .math-content {
+    font-size: 0.9rem;
+    
+    .katex {
+      font-size: 1em;
+    }
+  }
+  
+  .canvas-container {
+    padding: 0.75rem;
+    
+    canvas {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  
+  .sticky-top {
+    position: relative !important;
+    top: auto !important;
+  }
+}
+
+// Dark theme support
+[data-bs-theme="dark"] {
+  --bs-body-bg: #{$dark};
+  --bs-body-color: #{$light};
+  --bs-border-color: rgba(255, 255, 255, 0.1);
+  
+  .bg-light {
+    background-color: #{color.scale($dark, $lightness: -10%)} !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .border-bottom {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .text-muted {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+  
+  .canvas-container {
+    background-color: #{color.scale($dark, $lightness: -5%)};
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .control-value {
+    background-color: #{color.scale($dark, $lightness: -5%)};
+    color: #{$light};
+  }
+}
+
+// Auto dark mode based on system preference
+@media (prefers-color-scheme: dark) {
+  :root:not([data-bs-theme]) {
+    --bs-body-bg: #{$dark};
+    --bs-body-color: #{$light};
+    --bs-border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  :root:not([data-bs-theme]) .bg-light {
+    background-color: #{color.scale($dark, $lightness: -10%)} !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  :root:not([data-bs-theme]) .border-bottom {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  :root:not([data-bs-theme]) .text-muted {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+  
+  :root:not([data-bs-theme]) .canvas-container {
+    background-color: #{color.scale($dark, $lightness: -5%)};
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  :root:not([data-bs-theme]) .control-value {
+    background-color: #{color.scale($dark, $lightness: -5%)};
+    color: #{$light};
+  }
+}
